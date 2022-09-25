@@ -1,6 +1,6 @@
 /// エラトステネスの篩
 ///
-/// $n$ 以下の素数を返す。
+/// `n` 以下の素数を返す。
 pub fn sieve(n: usize) -> Vec<usize> {
     let mut primes = Vec::new();
     if n < 2 {
