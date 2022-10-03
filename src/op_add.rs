@@ -1,3 +1,5 @@
+//! 加法
+
 use crate::algebraic_structure::{Identity, Magma};
 use std::marker::PhantomData;
 use std::ops::Add;
@@ -37,6 +39,9 @@ macro_rules! identity_impl {
 }
 
 identity_impl! { usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 }
+
+pub trait Zero {}
+impl<T> Zero for OpAdd<T> {}
 
 #[cfg(test)]
 mod tests {

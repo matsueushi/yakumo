@@ -1,3 +1,4 @@
+/// Floor sumを計算する
 pub fn floor_sum(n: usize, m: usize, a: usize, b: usize) -> usize {
     let (x, a0) = (a / m, a % m);
     let (y, b0) = (b / m, b % m);

@@ -15,7 +15,7 @@ pub trait Commutative: Magma {}
 pub trait SemiGroup: Magma + Associative {}
 impl<T: Magma + Associative> SemiGroup for T {}
 
-/// 単位元を表現するトレイト。
+/// 単位元
 pub trait Identity: Magma {
     fn id(&self) -> Self::Set;
 }

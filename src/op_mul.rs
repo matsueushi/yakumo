@@ -1,3 +1,5 @@
+//! 乗法
+
 use crate::algebraic_structure::{Identity, Magma};
 use std::marker::PhantomData;
 use std::ops::Mul;
