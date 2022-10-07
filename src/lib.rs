@@ -1,5 +1,6 @@
 pub mod algebraic_structure;
 pub mod factor;
+pub mod fenwick;
 pub mod geom;
 pub mod math;
 pub mod op_add;
