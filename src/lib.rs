@@ -9,5 +9,6 @@ pub mod op_add;
 pub mod op_mul;
 pub mod permutation;
 pub mod prime;
+pub mod segtree;
 pub mod union_find;
 pub mod utils;

@@ -31,7 +31,7 @@ impl<T: Eq + ClosedMul> Magma for OpMul<T> {
 macro_rules! identity_impl {
     ($($t:ty)*) => ($(
         impl Identity for OpMul<$t> {
-            fn id(&self) -> Self::Set {
+            fn id() -> Self::Set {
                 1
             }
         }

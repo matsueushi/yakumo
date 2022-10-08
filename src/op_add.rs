@@ -31,7 +31,7 @@ impl<T: Eq + ClosedAdd> Magma for OpAdd<T> {
 macro_rules! identity_impl {
     ($($t:ty)*) => ($(
         impl Identity for OpAdd<$t> {
-            fn id(&self) -> Self::Set {
+            fn id() -> Self::Set {
                 0
             }
         }
