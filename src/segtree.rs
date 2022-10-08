@@ -31,16 +31,18 @@ where
         for (i, a) in arr.into_iter().enumerate() {
             self.data[1 << self.depth + i] = (*a).clone();
         }
-        for i in (1..1 << self.depth).rev() {
-            // self.update(i);
-        }
+        // for i in (1..1 << self.depth).rev() {
+        //     self.update(i);
+        // }
     }
+
+    // fn update(&mut self, i: usize) {
+    // self.data[i] = self.data[i << 1].op(&self.data[(i << 1) + 1]);
+    // }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::segtree::*;
-
     #[test]
     fn test_segtree() {}
 }

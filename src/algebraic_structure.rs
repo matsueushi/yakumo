@@ -25,3 +25,9 @@ pub trait Identity: Magma {
 /// モノイド
 pub trait Monoid: SemiGroup + Identity {}
 impl<T: SemiGroup + Identity> Monoid for T {}
+
+/// 環(未実装)
+pub trait Ring {}
+
+/// 体(未実装)
+pub trait Field {}

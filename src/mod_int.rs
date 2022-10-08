@@ -99,18 +99,31 @@ impl<M: Modulo> MulAssign for FiniteField<M> {
     }
 }
 
+/// mod を定義するためのマクロ。
+///
+/// # Examples
+/// ```
+/// modulo_impl!(Mod1000000007, 1000000007);
+/// ```
+#[macro_export]
+macro_rules! modulo_impl {
+    ($i: ident, $m: expr) => {
+        #[derive(Copy, Clone, Eq, PartialEq)]
+        pub struct $i;
+        impl Modulo for $i {
+            fn modulo() -> i64 {
+                $m
+            }
+        }
+    };
+}
+
 #[cfg(test)]
 mod tests {
     use crate::mod_int::*;
-    const P: i64 = 1000000007;
 
-    #[derive(Copy, Clone, Eq, PartialEq)]
-    struct Mod1000000007;
-    impl Modulo for Mod1000000007 {
-        fn modulo() -> i64 {
-            P
-        }
-    }
+    const P: i64 = 1000000007;
+    modulo_impl!(Mod1000000007, P);
     type F = FiniteField<Mod1000000007>;
 
     #[test]
