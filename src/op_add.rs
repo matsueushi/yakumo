@@ -50,6 +50,6 @@ mod tests {
     #[test]
     fn test_magma() {
         let op_add = OpAdd::default();
-        assert_eq!(2, op_add.op(1, 1));
+        assert_eq!(op_add.op(1, 1), 2);
     }
 }

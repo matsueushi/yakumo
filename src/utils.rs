@@ -12,11 +12,11 @@ mod tests {
 
     #[test]
     fn test_ceil_pow2() {
-        assert_eq!(0, ceil_pow2(0));
-        assert_eq!(0, ceil_pow2(1));
-        assert_eq!(1, ceil_pow2(2));
-        assert_eq!(2, ceil_pow2(3));
-        assert_eq!(2, ceil_pow2(4));
-        assert_eq!(3, ceil_pow2(5));
+        assert_eq!(ceil_pow2(0), 0);
+        assert_eq!(ceil_pow2(1), 0);
+        assert_eq!(ceil_pow2(2), 1);
+        assert_eq!(ceil_pow2(3), 2);
+        assert_eq!(ceil_pow2(4), 2);
+        assert_eq!(ceil_pow2(5), 3);
     }
 }

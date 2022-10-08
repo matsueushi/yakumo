@@ -47,6 +47,6 @@ mod tests {
     #[test]
     fn test_magma() {
         let op_mul = OpMul::default();
-        assert_eq!(6, op_mul.op(2, 3));
+        assert_eq!(op_mul.op(2, 3), 6);
     }
 }

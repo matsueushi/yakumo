@@ -41,3 +41,27 @@ impl FenwickTree {
         self.prefix_sum(r) - self.prefix_sum(l)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::fenwick::*;
+
+    #[test]
+    fn test_fenwick() {
+        for n in 0..=50 {
+            let mut fenwick = FenwickTree::new(n);
+            for i in 0..n {
+                fenwick.add(i, i * i);
+            }
+            for l in 0..=n {
+                for r in l..=n {
+                    let mut s = 0;
+                    for i in l..r {
+                        s += i * i;
+                    }
+                    assert_eq!(fenwick.sum(l, r), s);
+                }
+            }
+        }
+    }
+}
