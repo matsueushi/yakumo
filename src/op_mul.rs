@@ -1,4 +1,4 @@
-//! 乗法
+//! 乗法に関するモジュール。
 
 use crate::algebraic_structure::{Identity, Magma};
 use std::marker::PhantomData;

@@ -1,3 +1,5 @@
+//! Union-Find木。
+
 #[derive(Debug, Clone)]
 pub struct UnionFind {
     par: Vec<usize>,

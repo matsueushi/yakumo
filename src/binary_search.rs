@@ -1,3 +1,5 @@
+//! 二分探索に関するモジュール。
+
 use std::cmp::Ordering::{Greater, Less};
 
 /// AtCoderで使える Rust のバージョンが上がったら必要なくなるかも

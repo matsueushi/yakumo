@@ -1,3 +1,5 @@
+//! 代数的構造に関するモジュール。
+
 /// マグマ
 pub trait Magma {
     type Set: Eq;

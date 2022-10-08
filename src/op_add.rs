@@ -1,4 +1,4 @@
-//! 加法
+//! 加法に関するモジュール。
 
 use crate::algebraic_structure::{Identity, Magma};
 use std::marker::PhantomData;

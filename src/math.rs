@@ -1,3 +1,5 @@
+//! 数学に関するモジュール。
+
 /// Floor sumを計算する
 pub fn floor_sum(n: usize, m: usize, a: usize, b: usize) -> usize {
     let (x, a0) = (a / m, a % m);

@@ -1,3 +1,5 @@
+//! 因数分解に関するモジュール。
+
 use std::collections::HashMap;
 
 /// 因数分解
