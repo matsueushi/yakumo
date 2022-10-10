@@ -1,5 +1,5 @@
 //! 幾何に関係する
-use num::Integer; // 将来的には外したい
+use crate::math::Gcd;
 
 /// 座標上の点を表現するための構造体。
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -50,7 +50,7 @@ macro_rules! line_impl {
                     b = -b;
                     c = -c;
                 }
-                let g = a.gcd(&b);
+                let g = a.gcd(b);
                 Self { a: a / g, b: b / g, c: c / g}
             }
         }

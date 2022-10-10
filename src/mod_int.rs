@@ -100,11 +100,6 @@ impl<M: Modulo> MulAssign for FiniteField<M> {
 }
 
 /// mod を定義するためのマクロ。
-///
-/// # Examples
-/// ```
-/// modulo_impl!(Mod1000000007, 1000000007);
-/// ```
 #[macro_export]
 macro_rules! modulo_impl {
     ($i: ident, $m: expr) => {
