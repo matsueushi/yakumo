@@ -6,7 +6,7 @@
 ///
 /// # Examples
 /// ```
-/// use yakumo::prime::sieve;
+/// use yakumo::math::prime::sieve;
 ///
 /// assert_eq!(sieve(0), vec![]);
 /// assert_eq!(sieve(1), vec![]);
@@ -36,7 +36,7 @@ pub fn sieve(n: usize) -> Vec<usize> {
 
 #[cfg(test)]
 mod tests {
-    use crate::prime::sieve;
+    use crate::math::prime::sieve;
 
     #[test]
     fn test_primes() {

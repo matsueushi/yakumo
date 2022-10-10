@@ -1,6 +1,6 @@
 //! 加法に関するモジュール。
 
-use crate::algebraic_structure::{Identity, Magma};
+use crate::math::algebraic_structure::{Identity, Magma};
 use std::marker::PhantomData;
 use std::ops::Add;
 
@@ -45,7 +45,7 @@ impl<T> Zero for OpAdd<T> {}
 
 #[cfg(test)]
 mod tests {
-    use crate::op_add::*;
+    use crate::ops::op_add::*;
 
     #[test]
     fn test_magma() {

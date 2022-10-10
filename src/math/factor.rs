@@ -28,7 +28,7 @@ pub fn factorization(n: usize) -> HashMap<usize, usize> {
 
 #[cfg(test)]
 mod tests {
-    use crate::factor::factorization;
+    use crate::math::factor::factorization;
     use std::collections::HashMap;
 
     #[test]

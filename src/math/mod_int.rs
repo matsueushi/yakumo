@@ -115,7 +115,7 @@ macro_rules! modulo_impl {
 
 #[cfg(test)]
 mod tests {
-    use crate::mod_int::*;
+    use crate::math::mod_int::*;
 
     const P: i64 = 1000000007;
     modulo_impl!(Mod1000000007, P);

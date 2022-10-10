@@ -1,6 +1,6 @@
 //! 乗法に関するモジュール。
 
-use crate::algebraic_structure::{Identity, Magma};
+use crate::math::algebraic_structure::{Identity, Magma};
 use std::marker::PhantomData;
 use std::ops::Mul;
 
@@ -42,7 +42,7 @@ identity_impl! { usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 }
 
 #[cfg(test)]
 mod tests {
-    use crate::op_mul::*;
+    use crate::ops::op_mul::*;
 
     #[test]
     fn test_magma() {
