@@ -36,14 +36,30 @@ macro_rules! igcd_impl {
 ugcd_impl! { usize u8 u16 u32 u64 u128 }
 igcd_impl! { isize i8 i16 i32 i64 i128 }
 
+/// 拡張ユークリッドの互除法
+/// ax + by = gcd(a, b) を満たす (gcd(a,b), x, y) を返す。
+/// https://qiita.com/drken/items/b97ff231e43bce50199a
+pub fn ext_gcd(a: i64, b: i64) -> (i64, i64, i64) {
+    if b == 0 {
+        return (a, 1, 0);
+    }
+    let (d, s, t) = ext_gcd(b, a % b);
+    (d, t, s - a / b * t)
+}
+
 #[cfg(test)]
 mod tests {
-    use crate::math::gcd::Gcd;
+    use crate::math::gcd::{ext_gcd, Gcd};
 
     #[test]
     fn test_gcd() {
         assert_eq!(0.gcd(0), 0);
         assert_eq!((-2).gcd(3), 1);
         assert_eq!(4.gcd(6), 2);
+    }
+
+    #[test]
+    fn test_ext_gcd() {
+        assert_eq!(ext_gcd(111, 30), (3, 3, -11));
     }
 }

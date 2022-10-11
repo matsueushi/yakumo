@@ -1,6 +1,7 @@
 pub mod binary_search;
 pub mod fenwick;
 pub mod geom;
+pub mod lazy_segtree;
 pub mod math;
 pub mod ops;
 pub mod segtree;
