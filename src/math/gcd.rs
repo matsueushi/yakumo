@@ -1,3 +1,5 @@
+//! 最小公倍数に関するモジュール。
+
 /// 最小公倍数
 pub trait Gcd {
     // 最小公倍数を計算する。
@@ -37,6 +39,7 @@ ugcd_impl! { usize u8 u16 u32 u64 u128 }
 igcd_impl! { isize i8 i16 i32 i64 i128 }
 
 /// 拡張ユークリッドの互除法
+///
 /// ax + by = gcd(a, b) を満たす (gcd(a,b), x, y) を返す。
 /// https://qiita.com/drken/items/b97ff231e43bce50199a
 pub fn ext_gcd(a: i64, b: i64) -> (i64, i64, i64) {

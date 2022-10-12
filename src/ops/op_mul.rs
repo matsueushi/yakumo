@@ -1,6 +1,6 @@
 //! 乗法に関するモジュール。
 
-use crate::math::algebraic_structure::{Identity, Magma};
+use crate::math::algebraic_structure::{Associative, Commutative, Identity, Magma};
 use std::marker::PhantomData;
 use std::ops::Mul;
 
@@ -28,8 +28,12 @@ impl<T: Eq + ClosedMul> Magma for OpMul<T> {
     }
 }
 
-macro_rules! identity_impl {
+macro_rules! op_mul_int_impl {
     ($($t:ty)*) => ($(
+        impl Associative for OpMul<$t> {}
+
+        impl Commutative for OpMul<$t> {}
+
         impl Identity for OpMul<$t> {
             fn id() -> Self::Set {
                 1
@@ -38,7 +42,7 @@ macro_rules! identity_impl {
     )*)
 }
 
-identity_impl! { usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 }
+op_mul_int_impl! { usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 }
 
 #[cfg(test)]
 mod tests {

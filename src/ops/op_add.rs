@@ -1,6 +1,6 @@
 //! 加法に関するモジュール。
 
-use crate::math::algebraic_structure::{Identity, Magma, Recip};
+use crate::math::algebraic_structure::{Associative, Commutative, Identity, Magma, Recip};
 use std::marker::PhantomData;
 use std::ops::{Add, Neg};
 
@@ -37,8 +37,12 @@ impl<T: Eq + ClosedAdd + ClosedNeg> Recip for OpAdd<T> {
     }
 }
 
-macro_rules! identity_impl {
+macro_rules! op_add_int_impl {
     ($($t:ty)*) => ($(
+        impl Associative for OpAdd<$t> {}
+
+        impl Commutative for OpAdd<$t> {}
+
         impl Identity for OpAdd<$t> {
             fn id() -> Self::Set {
                 0
@@ -47,7 +51,7 @@ macro_rules! identity_impl {
     )*)
 }
 
-identity_impl! { usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 }
+op_add_int_impl! { usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 }
 
 pub trait Zero {}
 impl<T> Zero for OpAdd<T> {}
