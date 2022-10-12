@@ -1,4 +1,4 @@
-//! 遅延セグ木
+//! 遅延セグ木。
 use crate::utils::ceil_pow2;
 
 pub trait Monoid {

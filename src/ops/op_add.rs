@@ -1,11 +1,14 @@
 //! 加法に関するモジュール。
 
-use crate::math::algebraic_structure::{Identity, Magma};
+use crate::math::algebraic_structure::{Identity, Magma, Recip};
 use std::marker::PhantomData;
-use std::ops::Add;
+use std::ops::{Add, Neg};
 
 pub trait ClosedAdd: Sized + Add<Output = Self> {}
 impl<T: Add<Output = T>> ClosedAdd for T {}
+
+pub trait ClosedNeg: Sized + Neg<Output = Self> {}
+impl<T: Neg<Output = T>> ClosedNeg for T {}
 
 /// 加算を表すための構造体
 pub struct OpAdd<T> {
@@ -25,6 +28,12 @@ impl<T: Eq + ClosedAdd> Magma for OpAdd<T> {
 
     fn op(&self, x: Self::Set, y: Self::Set) -> Self::Set {
         x + y
+    }
+}
+
+impl<T: Eq + ClosedAdd + ClosedNeg> Recip for OpAdd<T> {
+    fn recip(&self, x: Self::Set) -> Self::Set {
+        -x
     }
 }
 

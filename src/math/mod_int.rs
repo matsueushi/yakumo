@@ -2,7 +2,9 @@
 
 use std::fmt::{Debug, Display};
 use std::marker::PhantomData;
-use std::ops::{Add, AddAssign, Mul, MulAssign, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
+
+use crate::math::gcd::ext_gcd;
 
 pub trait Modulo {
     fn modulo() -> i64;
@@ -99,6 +101,28 @@ impl<M: Modulo> MulAssign for FiniteField<M> {
     }
 }
 
+impl<M: Modulo> Div for FiniteField<M> {
+    type Output = Self;
+    fn div(self, rhs: Self) -> Self {
+        let v = rhs.val();
+        let m = M::modulo();
+        let (_, x, _) = ext_gcd(v, m);
+        let inv = x.rem_euclid(m);
+        Self::new(self.val() * inv)
+    }
+}
+
+impl<M: Modulo> DivAssign for FiniteField<M> {
+    fn div_assign(&mut self, rhs: Self) {
+        let v = rhs.val();
+        let m = M::modulo();
+        let (_, x, _) = ext_gcd(v, m);
+        let inv = x.rem_euclid(m);
+        self.0 *= inv;
+        self.0 = self.0.rem_euclid(M::modulo())
+    }
+}
+
 /// mod を定義するためのマクロ。
 #[macro_export]
 macro_rules! modulo_impl {
@@ -149,22 +173,36 @@ mod tests {
 
     #[test]
     fn test_finite_field_ops() {
+        // Add
         assert_eq!(F::new(1) + F::new(2), F::new(3));
 
+        // AddAssign
         let mut x = F::new(1);
         x += F::new(2);
         assert_eq!(x, F::new(3));
 
+        // Sub
         assert_eq!(F::new(1) - F::new(2), F::new(P - 1));
 
+        // SubAssign
         let mut x = F::new(1);
         x -= F::new(2);
         assert_eq!(x, F::new(P - 1));
 
+        // Mul
         assert_eq!(F::new(2) * F::new(3), F::new(6));
 
+        // MulAssign
         let mut x = F::new(2);
         x *= F::new(3);
         assert_eq!(x, F::new(6));
+
+        // Div
+        assert_eq!(F::new(2) / F::new(3), F::new(666666672));
+
+        // DivAssign
+        let mut x = F::new(2);
+        x /= F::new(3);
+        assert_eq!(x, F::new(666666672));
     }
 }
