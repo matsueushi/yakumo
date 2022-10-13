@@ -1,7 +1,7 @@
 //! 乗法演算を型として表現するためのモジュール。
 
 use super::super::math::algebra::{Associative, Commutative, Identity, Magma};
-use super::multiplicative::ClosedMul;
+use super::multiplicative::{ClosedMul, MulAssoc, MulComm, One};
 
 use std::marker::PhantomData;
 
@@ -26,21 +26,15 @@ impl<T: Eq + ClosedMul> Magma for OpMul<T> {
     }
 }
 
-macro_rules! op_mul_int_impl {
-    ($($t:ty)*) => ($(
-        impl Associative for OpMul<$t> {}
+impl<T: Eq + ClosedMul + MulAssoc> Associative for OpMul<T> {}
 
-        impl Commutative for OpMul<$t> {}
+impl<T: Eq + ClosedMul + MulComm> Commutative for OpMul<T> {}
 
-        impl Identity for OpMul<$t> {
-            fn id() -> Self::Set {
-                1
-            }
-        }
-    )*)
+impl<T: Eq + ClosedMul + One> Identity for OpMul<T> {
+    fn id() -> Self::Set {
+        T::one()
+    }
 }
-
-op_mul_int_impl! { usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 }
 
 #[cfg(test)]
 mod tests {

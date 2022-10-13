@@ -1,7 +1,7 @@
 //! 加法演算を型として表現するためのモジュール。
 
 use super::super::math::algebra::{Associative, Commutative, Identity, Magma, Recip};
-use super::additive::{ClosedAdd, ClosedNeg};
+use super::additive::{AddAssoc, AddComm, ClosedAdd, ClosedNeg, Zero};
 
 use std::marker::PhantomData;
 
@@ -32,24 +32,15 @@ impl<T: Eq + ClosedAdd + ClosedNeg> Recip for OpAdd<T> {
     }
 }
 
-macro_rules! op_add_int_impl {
-    ($($t:ty)*) => ($(
-        impl Associative for OpAdd<$t> {}
+impl<T: Eq + ClosedAdd + AddAssoc> Associative for OpAdd<T> {}
 
-        impl Commutative for OpAdd<$t> {}
+impl<T: Eq + ClosedAdd + AddComm> Commutative for OpAdd<T> {}
 
-        impl Identity for OpAdd<$t> {
-            fn id() -> Self::Set {
-                0
-            }
-        }
-    )*)
+impl<T: Eq + ClosedAdd + Zero> Identity for OpAdd<T> {
+    fn id() -> Self::Set {
+        T::zero()
+    }
 }
-
-op_add_int_impl! { usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 }
-
-pub trait Zero {}
-impl<T> Zero for OpAdd<T> {}
 
 #[cfg(test)]
 mod tests {
