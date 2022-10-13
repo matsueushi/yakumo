@@ -1,11 +1,9 @@
-//! 乗法に関するモジュール。
+//! 乗法演算を型として表現するためのモジュール。
 
-use crate::math::algebra::{Associative, Commutative, Identity, Magma};
+use super::super::math::algebra::{Associative, Commutative, Identity, Magma};
+use super::multiplicative::ClosedMul;
+
 use std::marker::PhantomData;
-use std::ops::Mul;
-
-pub trait ClosedMul: Sized + Mul<Output = Self> {}
-impl<T: Mul<Output = T>> ClosedMul for T {}
 
 /// 乗算を表すための構造体
 pub struct OpMul<T> {

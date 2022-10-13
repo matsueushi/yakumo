@@ -4,7 +4,7 @@ use std::fmt::{Debug, Display};
 use std::marker::PhantomData;
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
-use crate::math::gcd::ext_gcd;
+use super::gcd::ext_gcd;
 
 pub trait Modulo {
     fn modulo() -> i64;

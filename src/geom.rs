@@ -1,5 +1,5 @@
 //! 幾何関連。
-use crate::math::gcd::Gcd;
+use super::math::gcd::Gcd;
 
 /// 座標上の点を表現するための構造体。
 #[derive(Debug, Copy, Clone, PartialEq)]

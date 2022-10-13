@@ -1,14 +1,9 @@
-//! 加法に関するモジュール。
+//! 加法演算を型として表現するためのモジュール。
 
-use crate::math::algebra::{Associative, Commutative, Identity, Magma, Recip};
+use super::super::math::algebra::{Associative, Commutative, Identity, Magma, Recip};
+use super::additive::{ClosedAdd, ClosedNeg};
+
 use std::marker::PhantomData;
-use std::ops::{Add, Neg};
-
-pub trait ClosedAdd: Sized + Add<Output = Self> {}
-impl<T: Add<Output = T>> ClosedAdd for T {}
-
-pub trait ClosedNeg: Sized + Neg<Output = Self> {}
-impl<T: Neg<Output = T>> ClosedNeg for T {}
 
 /// 加算を表すための構造体
 pub struct OpAdd<T> {
