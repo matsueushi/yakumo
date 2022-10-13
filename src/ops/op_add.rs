@@ -1,6 +1,6 @@
 //! 加法に関するモジュール。
 
-use crate::math::algebraic_structure::{Associative, Commutative, Identity, Magma, Recip};
+use crate::math::algebra::{Associative, Commutative, Identity, Magma, Recip};
 use std::marker::PhantomData;
 use std::ops::{Add, Neg};
 

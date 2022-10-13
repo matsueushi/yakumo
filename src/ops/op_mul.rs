@@ -1,6 +1,6 @@
 //! 乗法に関するモジュール。
 
-use crate::math::algebraic_structure::{Associative, Commutative, Identity, Magma};
+use crate::math::algebra::{Associative, Commutative, Identity, Magma};
 use std::marker::PhantomData;
 use std::ops::Mul;
 

@@ -1,5 +1,5 @@
 //! セグメント木
-use crate::math::algebraic_structure::Monoid;
+use crate::math::algebra::Monoid;
 use crate::utils::ceil_pow2;
 
 pub struct SegTree<M>
