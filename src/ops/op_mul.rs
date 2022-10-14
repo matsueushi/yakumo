@@ -1,7 +1,9 @@
 //! 乗法演算を型として表現するためのモジュール。
 
+use crate::math::algebra::{PartialRecip, Recip};
+
 use super::super::math::algebra::{Associative, Commutative, Identity, Magma};
-use super::multiplicative::{ClosedMul, MulAssoc, MulComm, One};
+use super::multiplicative::{ClosedMul, MulAssoc, MulComm, MulPartialRecip, MulRecip, One};
 
 use std::marker::PhantomData;
 
@@ -23,6 +25,18 @@ impl<T: Eq + ClosedMul> Magma for OpMul<T> {
 
     fn op(&self, x: Self::Set, y: Self::Set) -> Self::Set {
         x * y
+    }
+}
+
+impl<T: Eq + ClosedMul + MulRecip> Recip for OpMul<T> {
+    fn recip(&self, x: Self::Set) -> Self::Set {
+        x.mul_recip()
+    }
+}
+
+impl<T: Eq + ClosedMul + MulPartialRecip> PartialRecip for OpMul<T> {
+    fn partial_recip(&self, x: Self::Set) -> Option<Self::Set> {
+        x.mul_partial_recip()
     }
 }
 

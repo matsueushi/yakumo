@@ -17,13 +17,6 @@ pub trait PartialRecip: Magma {
     fn partial_recip(&self, x: Self::Set) -> Option<Self::Set>;
 }
 
-// Recip であれば PartialRecip は満たされている
-impl<T: Recip> PartialRecip for T {
-    fn partial_recip(&self, x: Self::Set) -> Option<Self::Set> {
-        Some(self.recip(x))
-    }
-}
-
 /// 結合法則
 pub trait Associative: Magma {}
 
