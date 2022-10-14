@@ -39,7 +39,7 @@ impl<T: Magma + Associative> SemiGroup for T {}
 
 /// 単位元
 pub trait Identity: Magma {
-    fn id() -> Self::Set;
+    fn id(&self) -> Self::Set;
 }
 
 /// モノイド

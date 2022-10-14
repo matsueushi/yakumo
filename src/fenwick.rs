@@ -1,4 +1,5 @@
 //! フェニック木。
+use std::ops::Range;
 
 /// フェニック木。
 /// * 一点加算
@@ -37,8 +38,9 @@ impl FenwickTree {
         s
     }
 
-    pub fn sum(&self, l: usize, r: usize) -> usize {
-        self.prefix_sum(r) - self.prefix_sum(l)
+    /// 半開区間上の和を計算する。
+    pub fn sum(&self, r: Range<usize>) -> usize {
+        self.prefix_sum(r.end) - self.prefix_sum(r.start)
     }
 }
 
@@ -47,7 +49,18 @@ mod tests {
     use crate::fenwick::*;
 
     #[test]
-    fn test_fenwick() {
+    fn test_fenwick_basic() {
+        let mut fenwick = FenwickTree::new(5);
+        for i in 0..5 {
+            fenwick.add(i, i);
+        }
+        assert_eq!(fenwick.sum(0..0), 0);
+        assert_eq!(fenwick.sum(1..3), 3);
+        assert_eq!(fenwick.sum(0..5), 10);
+    }
+
+    #[test]
+    fn test_fenwick_square() {
         for n in 0..=50 {
             let mut fenwick = FenwickTree::new(n);
             for i in 0..n {
@@ -59,7 +72,7 @@ mod tests {
                     for i in l..r {
                         s += i * i;
                     }
-                    assert_eq!(fenwick.sum(l, r), s);
+                    assert_eq!(fenwick.sum(l..r), s);
                 }
             }
         }

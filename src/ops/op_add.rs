@@ -37,7 +37,7 @@ impl<T: Eq + ClosedAdd + AddAssoc> Associative for OpAdd<T> {}
 impl<T: Eq + ClosedAdd + AddComm> Commutative for OpAdd<T> {}
 
 impl<T: Eq + ClosedAdd + Zero> Identity for OpAdd<T> {
-    fn id() -> Self::Set {
+    fn id(&self) -> Self::Set {
         T::zero()
     }
 }

@@ -31,7 +31,7 @@ impl<T: Eq + ClosedMul + MulAssoc> Associative for OpMul<T> {}
 impl<T: Eq + ClosedMul + MulComm> Commutative for OpMul<T> {}
 
 impl<T: Eq + ClosedMul + One> Identity for OpMul<T> {
-    fn id() -> Self::Set {
+    fn id(&self) -> Self::Set {
         T::one()
     }
 }
