@@ -16,12 +16,26 @@ pub trait One: ClosedMul {
     fn one() -> Self;
 }
 
+/// Mul が部分的に逆元を持つ。
+pub trait MulPartialRecip: ClosedMul {
+    fn mul_partial_recip(self) -> Option<Self>;
+}
+
+/// Mul が逆元を持つ。
+pub trait MulRecip: ClosedMul {
+    fn mul_recip(self) -> Self;
+}
+
+impl<T: MulRecip> MulPartialRecip for T {
+    fn mul_partial_recip(self) -> Option<Self> {
+        Some(self.mul_recip())
+    }
+}
+
 macro_rules! multiplicative_int_impl {
     ($($t:ty)*) => ($(
         impl MulAssoc for $t {}
-
         impl MulComm for $t {}
-
         impl One for $t {
             fn one() -> Self {
                 1
