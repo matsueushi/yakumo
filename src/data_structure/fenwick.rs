@@ -1,4 +1,6 @@
 //! フェニック木。
+use super::fold::Fold;
+
 use std::ops::{AddAssign, Range, Sub};
 
 /// フェニック木。
@@ -42,9 +44,14 @@ where
         }
         s
     }
+}
 
+impl<T> Fold<T> for FenwickTree<T>
+where
+    T: Copy + Clone + AddAssign<T> + Sub<Output = T>,
+{
     /// 半開区間上の和を計算する。
-    pub fn sum(&self, r: Range<usize>) -> T {
+    fn fold(&self, r: Range<usize>) -> T {
         self.prefix_sum(r.end) - self.prefix_sum(r.start)
     }
 }
@@ -59,9 +66,9 @@ mod tests {
         for i in 0..5 {
             fenwick.add(i, i);
         }
-        assert_eq!(fenwick.sum(0..0), 0);
-        assert_eq!(fenwick.sum(1..3), 3);
-        assert_eq!(fenwick.sum(0..5), 10);
+        assert_eq!(fenwick.fold(0..0), 0);
+        assert_eq!(fenwick.fold(1..3), 3);
+        assert_eq!(fenwick.fold(0..5), 10);
     }
 
     #[test]
@@ -77,7 +84,7 @@ mod tests {
                     for i in l..r {
                         s += i * i;
                     }
-                    assert_eq!(fenwick.sum(l..r), s);
+                    assert_eq!(fenwick.fold(l..r), s);
                 }
             }
         }

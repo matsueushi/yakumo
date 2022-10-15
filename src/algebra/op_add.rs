@@ -1,5 +1,4 @@
 //! 加法演算を型として表現するためのモジュール。
-
 use super::additive::{AddAssoc, AddComm, ClosedAdd, ClosedNeg, Zero};
 use super::structure::{Associative, Commutative, Identity, Magma, Recip};
 

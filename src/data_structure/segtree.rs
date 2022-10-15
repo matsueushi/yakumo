@@ -1,6 +1,9 @@
+//! セグメント木
+
 #[cfg(test)]
 mod tests {
-    use std::ops::Range;
+    use super::super::fold::*;
+    use std::ops::{Index, Range};
 
     struct NaiveSegTree<T> {
         data: Vec<T>,
@@ -11,15 +14,20 @@ mod tests {
             Self { data: vec![0; n] }
         }
 
-        pub fn get(&self, i: usize) -> usize {
-            self.data[i]
-        }
-
         pub fn set(&mut self, i: usize, val: usize) {
             self.data[i] = val;
         }
+    }
 
-        pub fn prod(&self, r: Range<usize>) -> usize {
+    impl Index<usize> for NaiveSegTree<usize> {
+        type Output = usize;
+        fn index(&self, i: usize) -> &Self::Output {
+            &self.data[i]
+        }
+    }
+
+    impl Fold<usize> for NaiveSegTree<usize> {
+        fn fold(&self, r: Range<usize>) -> usize {
             let mut x = std::usize::MAX;
             for i in r {
                 x = x.min(self.data[i]);
@@ -36,11 +44,11 @@ mod tests {
             naive_seg.set(i, i * i);
         }
 
-        assert_eq!(naive_seg.get(0), 0);
-        assert_eq!(naive_seg.get(2), 4);
+        assert_eq!(naive_seg[0], 0);
+        assert_eq!(naive_seg[2], 4);
 
-        assert_eq!(naive_seg.prod(0..0), std::usize::MAX);
-        assert_eq!(naive_seg.prod(0..3), 0);
-        assert_eq!(naive_seg.prod(1..3), 1);
+        assert_eq!(naive_seg.fold(0..0), std::usize::MAX);
+        assert_eq!(naive_seg.fold(0..3), 0);
+        assert_eq!(naive_seg.fold(1..3), 1);
     }
 }
