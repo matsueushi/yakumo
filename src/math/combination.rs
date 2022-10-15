@@ -32,7 +32,7 @@ impl CombinationModPrime<usize> {
 
 #[cfg(test)]
 mod tests {
-    use crate::math::combination::*;
+    use super::*;
 
     #[test]
     fn test_power_mod_combination() {

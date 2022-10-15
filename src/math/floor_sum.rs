@@ -13,7 +13,7 @@ pub fn floor_sum(n: usize, m: usize, a: usize, b: usize) -> usize {
 
 #[cfg(test)]
 mod tests {
-    use crate::math::floor_sum::floor_sum;
+    use super::floor_sum;
 
     fn floor_sum_naive(n: usize, m: usize, a: usize, b: usize) -> usize {
         let mut s = 0;

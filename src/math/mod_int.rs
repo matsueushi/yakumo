@@ -4,8 +4,8 @@ use std::fmt::{Debug, Display};
 use std::marker::PhantomData;
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
-use crate::algebra::additive::{AddAssoc, AddComm};
-use crate::algebra::multiplicative::{MulAssoc, MulComm, PartialMulRecip};
+use super::super::algebra::additive::{AddAssoc, AddComm};
+use super::super::algebra::multiplicative::{MulAssoc, MulComm, PartialMulRecip};
 
 use super::gcd::ext_gcd;
 
@@ -159,7 +159,7 @@ macro_rules! modulo_impl {
 
 #[cfg(test)]
 mod tests {
-    use crate::math::mod_int::*;
+    use super::*;
 
     const P: i64 = 1000000007;
     modulo_impl!(Mod1000000007, P);

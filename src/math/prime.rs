@@ -36,7 +36,7 @@ pub fn sieve(n: usize) -> Vec<usize> {
 
 #[cfg(test)]
 mod tests {
-    use crate::math::prime::sieve;
+    use super::sieve;
 
     #[test]
     fn test_primes() {

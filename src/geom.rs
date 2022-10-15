@@ -61,7 +61,7 @@ line_impl! { isize i8 i16 i32 i64 i128 }
 
 #[cfg(test)]
 mod tests {
-    use crate::geom::{Line, Point};
+    use super::{Line, Point};
 
     #[test]
     fn test_point() {

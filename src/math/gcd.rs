@@ -52,7 +52,7 @@ pub fn ext_gcd(a: i64, b: i64) -> (i64, i64, i64) {
 
 #[cfg(test)]
 mod tests {
-    use crate::math::gcd::{ext_gcd, Gcd};
+    use super::{ext_gcd, Gcd};
 
     #[test]
     fn test_gcd() {

@@ -23,7 +23,7 @@ pub fn next_permutation<T: PartialOrd>(nums: &mut [T]) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::math::permutation::*;
+    use super::*;
 
     #[test]
     fn test_next_permutation() {
