@@ -3,7 +3,7 @@ use cargo_snippet::snippet;
 
 /// マグマ
 #[snippet("algebra-structure")]
-pub trait Magma {
+pub trait Magma: Default {
     type Set: Eq;
 
     fn op(&self, x: Self::Set, y: Self::Set) -> Self::Set;

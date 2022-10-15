@@ -13,17 +13,16 @@ pub trait Max {
 
 #[snippet("algebra/minmax")]
 macro_rules! min_max_int_impl {
-    ($($t:ident)*) => ($(
-
+    ($($t:ty)*) => ($(
         impl Min for $t {
             fn min() -> Self {
-                std::$t::MIN
+                <$t>::MIN
             }
         }
 
         impl Max for $t {
             fn max() -> Self {
-                std::$t::MAX
+                <$t>::MAX
             }
         }
 

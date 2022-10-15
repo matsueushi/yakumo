@@ -61,5 +61,6 @@ mod tests {
     fn test_op_add_magma() {
         let op_add = OpAdd::default();
         assert_eq!(op_add.op(1, 1), 2);
+        assert_eq!(op_add.id(), 0);
     }
 }

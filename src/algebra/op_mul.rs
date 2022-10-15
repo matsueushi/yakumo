@@ -68,5 +68,6 @@ mod tests {
     fn test_op_mul_magma() {
         let op_mul = OpMul::default();
         assert_eq!(op_mul.op(2, 3), 6);
+        assert_eq!(op_mul.id(), 1);
     }
 }
