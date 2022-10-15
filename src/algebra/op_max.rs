@@ -1,6 +1,7 @@
 //! 最大値取得を型として表現するためのモジュール。
 use cargo_snippet::snippet;
 
+use super::minmax::Min;
 #[snippet("algebra/op_max")]
 #[snippet("algebra/op_max")]
 use super::structure::{Associative, Commutative, Identity, Magma};
@@ -24,37 +25,29 @@ impl<T> Default for OpMax<T> {
 }
 
 #[snippet("algebra/op_max")]
-macro_rules! op_max_int_impl {
-    ($($t:ty)*) => ($(
-        impl Magma for OpMax<$t> {
-            type Set = $t;
+impl<T: Ord> Magma for OpMax<T> {
+    type Set = T;
 
-            fn op(&self, x: Self::Set, y: Self::Set) -> Self::Set {
-                x.max(y)
-            }
-        }
-
-        impl Associative for OpMax<$t> {}
-        impl Commutative for OpMax<$t> {}
-    )*)
-}
-#[snippet("algebra/op_max")]
-macro_rules! op_max_id_int_impl {
-    ($($t:ident)*) => ($(
-        impl Identity for OpMax<$t> {
-            fn id(&self) -> Self::Set {
-                // <$t>::MIN に置き換えて上と統合したい
-                std::$t::MIN
-            }
-        }
-
-    )*)
+    fn op(&self, x: Self::Set, y: Self::Set) -> Self::Set {
+        x.max(y)
+    }
 }
 
 #[snippet("algebra/op_max")]
-op_max_int_impl! { usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 }
+impl<T: Ord> Associative for OpMax<T> {}
+
 #[snippet("algebra/op_max")]
-op_max_id_int_impl! { usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 }
+impl<T: Ord> Commutative for OpMax<T> {}
+
+#[snippet("algebra/op_max")]
+impl<T> Identity for OpMax<T>
+where
+    T: Ord + Min,
+{
+    fn id(&self) -> Self::Set {
+        <T as Min>::min()
+    }
+}
 
 #[cfg(test)]
 mod tests {
