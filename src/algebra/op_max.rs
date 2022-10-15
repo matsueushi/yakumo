@@ -36,10 +36,15 @@ macro_rules! op_max_int_impl {
 
         impl Associative for OpMax<$t> {}
         impl Commutative for OpMax<$t> {}
-
+    )*)
+}
+#[snippet("algebra/op_max")]
+macro_rules! op_max_id_int_impl {
+    ($($t:ident)*) => ($(
         impl Identity for OpMax<$t> {
             fn id(&self) -> Self::Set {
-                <$t>::MIN
+                // <$t>::MIN に置き換えて上と統合したい
+                std::$t::MIN
             }
         }
 
@@ -48,6 +53,8 @@ macro_rules! op_max_int_impl {
 
 #[snippet("algebra/op_max")]
 op_max_int_impl! { usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 }
+#[snippet("algebra/op_max")]
+op_max_id_int_impl! { usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 }
 
 #[cfg(test)]
 mod tests {
