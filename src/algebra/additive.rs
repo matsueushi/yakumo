@@ -1,4 +1,4 @@
-//! Add, Neg が満たす条件を表現するためのトレイトたち。
+//! Add, Neg が満たす条件を表現するためのモジュール。
 use std::ops::{Add, Neg};
 
 pub trait ClosedAdd: Add<Output = Self> + Sized {}

@@ -1,4 +1,4 @@
-//! Mul が満たす条件を表現するためのトレイトたち。
+//! Mul が満たす条件を表現するためのモジュール。
 
 use std::ops::Mul;
 
@@ -17,8 +17,8 @@ pub trait One: ClosedMul {
 }
 
 /// Mul が部分的に逆元を持つ。
-pub trait MulPartialRecip: ClosedMul {
-    fn mul_partial_recip(self) -> Option<Self>;
+pub trait PartialMulRecip: ClosedMul {
+    fn partial_mul_recip(self) -> Option<Self>;
 }
 
 /// Mul が逆元を持つ。
@@ -26,8 +26,8 @@ pub trait MulRecip: ClosedMul {
     fn mul_recip(self) -> Self;
 }
 
-impl<T: MulRecip> MulPartialRecip for T {
-    fn mul_partial_recip(self) -> Option<Self> {
+impl<T: MulRecip> PartialMulRecip for T {
+    fn partial_mul_recip(self) -> Option<Self> {
         Some(self.mul_recip())
     }
 }

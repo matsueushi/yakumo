@@ -49,7 +49,7 @@ impl UnionFind {
 
 #[cfg(test)]
 mod tests {
-    use crate::union_find::*;
+    use super::*;
 
     #[test]
     fn test_union_find_0() {

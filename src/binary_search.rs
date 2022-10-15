@@ -3,7 +3,7 @@
 use std::cmp::Ordering::{Greater, Less};
 
 /// AtCoderで使える Rust のバージョンが上がったら必要なくなるかも
-trait BinarySearch<T> {
+pub trait BinarySearch<T> {
     fn search_sorted_first(&self, x: &T) -> usize;
     fn search_sorted_last(&self, x: &T) -> usize;
 }

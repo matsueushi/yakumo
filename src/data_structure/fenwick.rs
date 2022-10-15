@@ -51,7 +51,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use crate::fenwick::*;
+    use super::*;
 
     #[test]
     fn test_fenwick_basic() {

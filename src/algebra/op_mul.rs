@@ -1,6 +1,6 @@
 //! 乗法演算を型として表現するためのモジュール。
 
-use super::multiplicative::{ClosedMul, MulAssoc, MulComm, MulPartialRecip, MulRecip, One};
+use super::multiplicative::{ClosedMul, MulAssoc, MulComm, MulRecip, One, PartialMulRecip};
 use super::structure::{Associative, Commutative, Identity, Magma, PartialRecip, Recip};
 
 use std::marker::PhantomData;
@@ -32,9 +32,9 @@ impl<T: Eq + ClosedMul + MulRecip> Recip for OpMul<T> {
     }
 }
 
-impl<T: Eq + ClosedMul + MulPartialRecip> PartialRecip for OpMul<T> {
+impl<T: Eq + ClosedMul + PartialMulRecip> PartialRecip for OpMul<T> {
     fn partial_recip(&self, x: Self::Set) -> Option<Self::Set> {
-        x.mul_partial_recip()
+        x.partial_mul_recip()
     }
 }
 

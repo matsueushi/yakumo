@@ -17,13 +17,13 @@ pub trait PartialRecip: Magma {
     fn partial_recip(&self, x: Self::Set) -> Option<Self::Set>;
 }
 
-/// 結合法則
+/// 結合法則を満たすことを示すトレイト。
 pub trait Associative: Magma {}
 
-/// 可換法則
+/// 可換法則を満たすことを示すトレイト。
 pub trait Commutative: Magma {}
 
-/// 分配法則
+/// 分配法則を満たすことを示すトレイト。
 pub trait Distributive<A: Magma> {}
 
 /// 半群

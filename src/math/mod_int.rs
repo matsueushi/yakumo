@@ -4,9 +4,13 @@ use std::fmt::{Debug, Display};
 use std::marker::PhantomData;
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
+use crate::algebra::additive::{AddAssoc, AddComm};
+use crate::algebra::multiplicative::{MulAssoc, MulComm, PartialMulRecip};
+
 use super::gcd::ext_gcd;
 
 pub trait Modulo {
+    /// 法。
     fn modulo() -> i64;
 }
 
@@ -104,24 +108,40 @@ impl<M: Modulo> MulAssign for FiniteField<M> {
 impl<M: Modulo> Div for FiniteField<M> {
     type Output = Self;
     fn div(self, rhs: Self) -> Self {
-        let v = rhs.val();
-        let m = M::modulo();
-        let (_, x, _) = ext_gcd(v, m);
-        let inv = x.rem_euclid(m);
-        Self::new(self.val() * inv)
+        match rhs.partial_mul_recip() {
+            Some(v) => self * v,
+            None => panic!("cannot devide by 0"),
+        }
     }
 }
 
 impl<M: Modulo> DivAssign for FiniteField<M> {
     fn div_assign(&mut self, rhs: Self) {
-        let v = rhs.val();
-        let m = M::modulo();
-        let (_, x, _) = ext_gcd(v, m);
-        let inv = x.rem_euclid(m);
-        self.0 *= inv;
-        self.0 = self.0.rem_euclid(M::modulo())
+        match rhs.partial_mul_recip() {
+            Some(v) => *self *= v,
+            None => panic!("cannot devide by 0"),
+        }
     }
 }
+
+impl<M: Modulo> PartialMulRecip for FiniteField<M> {
+    fn partial_mul_recip(self) -> Option<Self> {
+        if self.0 == 0 {
+            None
+        } else {
+            let v = self.val();
+            let m = M::modulo();
+            let (_, x, _) = ext_gcd(v, m);
+            let inv = x.rem_euclid(m);
+            Some(Self::new(inv))
+        }
+    }
+}
+
+impl<M: Modulo> AddAssoc for FiniteField<M> {}
+impl<M: Modulo> AddComm for FiniteField<M> {}
+impl<M: Modulo> MulAssoc for FiniteField<M> {}
+impl<M: Modulo> MulComm for FiniteField<M> {}
 
 /// mod を定義するためのマクロ。
 #[macro_export]
@@ -204,5 +224,9 @@ mod tests {
         let mut x = F::new(2);
         x /= F::new(3);
         assert_eq!(x, F::new(666666672));
+
+        // PartialMulRecip
+        assert_eq!(F::new(0).partial_mul_recip(), None);
+        assert_eq!(F::new(2).partial_mul_recip(), Some(F::new(500000004)));
     }
 }
