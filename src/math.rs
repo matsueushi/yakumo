@@ -1,5 +1,4 @@
 //! 数学に関するモジュール。
-pub mod algebra;
 pub mod combination;
 pub mod factor;
 pub mod floor_sum;

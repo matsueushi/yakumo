@@ -1,7 +1,7 @@
 //! 加法演算を型として表現するためのモジュール。
 
-use super::super::math::algebra::{Associative, Commutative, Identity, Magma, Recip};
 use super::additive::{AddAssoc, AddComm, ClosedAdd, ClosedNeg, Zero};
+use super::structure::{Associative, Commutative, Identity, Magma, Recip};
 
 use std::marker::PhantomData;
 
@@ -44,7 +44,7 @@ impl<T: Eq + ClosedAdd + Zero> Identity for OpAdd<T> {
 
 #[cfg(test)]
 mod tests {
-    use crate::ops::op_add::*;
+    use super::*;
 
     #[test]
     fn test_op_add_magma() {
