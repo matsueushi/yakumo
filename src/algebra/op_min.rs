@@ -64,6 +64,6 @@ mod tests {
     fn test_op_min_magm() {
         let op_min = OpMin::<i32>::default();
         assert_eq!(op_min.op(1, 2), 1);
-        assert_eq!(op_min.id(), i32::MAX);
+        assert_eq!(op_min.id(), std::i32::MAX);
     }
 }
