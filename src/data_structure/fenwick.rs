@@ -32,7 +32,7 @@ where
         }
     }
 
-    /// a[i] += val という更新を行う。
+    /// `a[i] += val` という更新を行う。
     pub fn add(&mut self, i: usize, val: T) {
         let mut i = i + 1;
         while i <= self.len {
