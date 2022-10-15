@@ -1,26 +1,31 @@
 //! フェニック木。
-use std::ops::Range;
+use std::ops::{AddAssign, Range, Sub};
 
 /// フェニック木。
 /// * 一点加算
 /// * 区間取得
 /// の二つのクエリを `O(log N)` で処理できるデータ構造
-pub struct FenwickTree {
+pub struct FenwickTree<T> {
     len: usize,
-    data: Vec<usize>,
+    data: Vec<T>,
+    e: T,
 }
 
-impl FenwickTree {
+impl<T> FenwickTree<T>
+where
+    T: Copy + Clone + AddAssign<T> + Sub<Output = T>,
+{
     /// 長さ n のフェニック木を作成する。
-    pub fn new(n: usize) -> Self {
+    pub fn new(n: usize, e: T) -> Self {
         Self {
             len: n,
-            data: vec![0; n],
+            data: vec![e; n],
+            e,
         }
     }
 
     /// a[i] += val という更新を行う。
-    pub fn add(&mut self, i: usize, val: usize) {
+    pub fn add(&mut self, i: usize, val: T) {
         let mut i = i + 1;
         while i <= self.len {
             self.data[i - 1] += val;
@@ -28,8 +33,8 @@ impl FenwickTree {
         }
     }
 
-    pub fn prefix_sum(&self, r: usize) -> usize {
-        let mut s = 0;
+    pub fn prefix_sum(&self, r: usize) -> T {
+        let mut s = self.e;
         let mut idx = r;
         while idx > 0 {
             s += self.data[idx - 1];
@@ -39,7 +44,7 @@ impl FenwickTree {
     }
 
     /// 半開区間上の和を計算する。
-    pub fn sum(&self, r: Range<usize>) -> usize {
+    pub fn sum(&self, r: Range<usize>) -> T {
         self.prefix_sum(r.end) - self.prefix_sum(r.start)
     }
 }
@@ -50,7 +55,7 @@ mod tests {
 
     #[test]
     fn test_fenwick_basic() {
-        let mut fenwick = FenwickTree::new(5);
+        let mut fenwick = FenwickTree::new(5, 0);
         for i in 0..5 {
             fenwick.add(i, i);
         }
@@ -62,7 +67,7 @@ mod tests {
     #[test]
     fn test_fenwick_square() {
         for n in 0..=50 {
-            let mut fenwick = FenwickTree::new(n);
+            let mut fenwick = FenwickTree::new(n, 0);
             for i in 0..n {
                 fenwick.add(i, i * i);
             }

@@ -55,7 +55,7 @@ mod tests {
     use crate::ops::op_mul::*;
 
     #[test]
-    fn test_magma() {
+    fn test_op_mul_magma() {
         let op_mul = OpMul::default();
         assert_eq!(op_mul.op(2, 3), 6);
     }
