@@ -1,4 +1,7 @@
-/// Floor sumを計算する
+//! Floor sumを計算する
+use cargo_snippet::snippet;
+
+#[snippet("math/floor_sum")]
 pub fn floor_sum(n: usize, m: usize, a: usize, b: usize) -> usize {
     let (x, a0) = (a / m, a % m);
     let (y, b0) = (b / m, b % m);

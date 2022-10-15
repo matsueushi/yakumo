@@ -1,6 +1,10 @@
 //! 幾何関連。
+use cargo_snippet::snippet;
+
+#[snippet("geom")]
 use super::math::gcd::Gcd;
 
+#[snippet("geom")]
 /// 座標上の点を表現するための構造体。
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct Point<T> {
@@ -8,6 +12,7 @@ pub struct Point<T> {
     pub y: T,
 }
 
+#[snippet("geom")]
 macro_rules! point_impl {
     ($($t:ty)*) => ($(
         impl Point<$t> {
@@ -28,9 +33,11 @@ macro_rules! point_impl {
     )*)
 }
 
+#[snippet("geom")]
 point_impl! { isize i8 i16 i32 i64 i128 }
 
 /// 直線を表す構造体。
+#[snippet("geom")]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct Line<T> {
     pub a: T,
@@ -38,6 +45,7 @@ pub struct Line<T> {
     pub c: T,
 }
 
+#[snippet("geom")]
 macro_rules! line_impl {
     ($($t:ty)*) => ($(
         impl Line<$t> {
@@ -57,6 +65,7 @@ macro_rules! line_impl {
     )*)
 }
 
+#[snippet("geom")]
 line_impl! { isize i8 i16 i32 i64 i128 }
 
 #[cfg(test)]

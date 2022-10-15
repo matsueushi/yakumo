@@ -1,11 +1,14 @@
 //! Union-Find木。
+use cargo_snippet::snippet;
 
+#[snippet("data_structure/union_find")]
 #[derive(Debug, Clone)]
 pub struct UnionFind {
     par: Vec<usize>,
     size: Vec<usize>,
 }
 
+#[snippet("data_structure/union_find")]
 impl UnionFind {
     pub fn new(n: usize) -> Self {
         Self {

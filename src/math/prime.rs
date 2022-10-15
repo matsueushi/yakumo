@@ -1,4 +1,5 @@
 //! 素数に関するモジュール。
+use cargo_snippet::snippet;
 
 /// エラトステネスの篩
 ///
@@ -14,6 +15,7 @@
 /// assert_eq!(sieve(10), vec![2, 3, 5, 7]);
 /// assert_eq!(sieve(11), vec![2, 3, 5, 7, 11]);
 /// ```
+#[snippet("math/prime")]
 pub fn sieve(n: usize) -> Vec<usize> {
     let mut primes = Vec::new();
     if n < 2 {

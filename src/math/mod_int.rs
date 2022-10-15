@@ -1,35 +1,47 @@
 //! 剰余演算を行うモジュール。
+use cargo_snippet::snippet;
 
+#[snippet("math/mod_int")]
 use std::fmt::{Debug, Display};
+#[snippet("math/mod_int")]
 use std::marker::PhantomData;
+#[snippet("math/mod_int")]
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
+#[snippet("math/mod_int")]
 use super::super::algebra::additive::{AddAssoc, AddComm};
+#[snippet("math/mod_int")]
 use super::super::algebra::multiplicative::{MulAssoc, MulComm, PartialMulRecip};
 
+#[snippet("math/mod_int")]
 use super::gcd::ext_gcd;
 
+#[snippet("math/mod_int")]
 pub trait Modulo {
     /// 法。
     fn modulo() -> i64;
 }
 
 /// 有限体。
+#[snippet("math/mod_int")]
 #[derive(Copy, Clone, Eq, PartialEq)]
 pub struct FiniteField<M>(i64, PhantomData<M>);
 
+#[snippet("math/mod_int")]
 impl<M: Modulo> Display for FiniteField<M> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{} mod {}", self.0, M::modulo())
     }
 }
 
+#[snippet("math/mod_int")]
 impl<M: Modulo> Debug for FiniteField<M> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{} mod {}", self.0, M::modulo())
     }
 }
 
+#[snippet("math/mod_int")]
 impl<M: Modulo> FiniteField<M> {
     /// 整数を `0 <= x < m` に正規化してインスタンスを作成する。
     pub fn new(x: i64) -> Self {
@@ -63,6 +75,7 @@ impl<M: Modulo> FiniteField<M> {
     }
 }
 
+#[snippet("math/mod_int")]
 impl<M: Modulo> Add for FiniteField<M> {
     type Output = Self;
     fn add(self, rhs: Self) -> Self {
@@ -70,6 +83,7 @@ impl<M: Modulo> Add for FiniteField<M> {
     }
 }
 
+#[snippet("math/mod_int")]
 impl<M: Modulo> AddAssign for FiniteField<M> {
     fn add_assign(&mut self, rhs: Self) {
         self.0 += rhs.0;
@@ -77,6 +91,7 @@ impl<M: Modulo> AddAssign for FiniteField<M> {
     }
 }
 
+#[snippet("math/mod_int")]
 impl<M: Modulo> Sub for FiniteField<M> {
     type Output = Self;
     fn sub(self, rhs: Self) -> Self {
@@ -84,6 +99,7 @@ impl<M: Modulo> Sub for FiniteField<M> {
     }
 }
 
+#[snippet("math/mod_int")]
 impl<M: Modulo> SubAssign for FiniteField<M> {
     fn sub_assign(&mut self, rhs: Self) {
         self.0 -= rhs.0;
@@ -91,6 +107,7 @@ impl<M: Modulo> SubAssign for FiniteField<M> {
     }
 }
 
+#[snippet("math/mod_int")]
 impl<M: Modulo> Mul for FiniteField<M> {
     type Output = Self;
     fn mul(self, rhs: Self) -> Self {
@@ -98,6 +115,7 @@ impl<M: Modulo> Mul for FiniteField<M> {
     }
 }
 
+#[snippet("math/mod_int")]
 impl<M: Modulo> MulAssign for FiniteField<M> {
     fn mul_assign(&mut self, rhs: Self) {
         self.0 *= rhs.0;
@@ -115,6 +133,7 @@ impl<M: Modulo> Div for FiniteField<M> {
     }
 }
 
+#[snippet("math/mod_int")]
 impl<M: Modulo> DivAssign for FiniteField<M> {
     fn div_assign(&mut self, rhs: Self) {
         match rhs.partial_mul_recip() {
@@ -124,6 +143,7 @@ impl<M: Modulo> DivAssign for FiniteField<M> {
     }
 }
 
+#[snippet("math/mod_int")]
 impl<M: Modulo> PartialMulRecip for FiniteField<M> {
     fn partial_mul_recip(self) -> Option<Self> {
         if self.0 == 0 {
@@ -138,12 +158,17 @@ impl<M: Modulo> PartialMulRecip for FiniteField<M> {
     }
 }
 
+#[snippet("math/mod_int")]
 impl<M: Modulo> AddAssoc for FiniteField<M> {}
+#[snippet("math/mod_int")]
 impl<M: Modulo> AddComm for FiniteField<M> {}
+#[snippet("math/mod_int")]
 impl<M: Modulo> MulAssoc for FiniteField<M> {}
+#[snippet("math/mod_int")]
 impl<M: Modulo> MulComm for FiniteField<M> {}
 
 /// mod を定義するためのマクロ。
+#[snippet("math/mod_int")]
 #[macro_export]
 macro_rules! modulo_impl {
     ($i: ident, $m: expr) => {

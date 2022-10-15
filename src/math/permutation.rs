@@ -1,5 +1,7 @@
 //! 並び替えに関するモジュール。
+use cargo_snippet::snippet;
 
+#[snippet("math/permutation")]
 pub fn next_permutation<T: PartialOrd>(nums: &mut [T]) -> bool {
     let last_asc = match nums.windows(2).rposition(|w| w[0] < w[1]) {
         None => {

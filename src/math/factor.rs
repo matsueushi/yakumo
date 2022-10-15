@@ -1,10 +1,13 @@
 //! 因数分解に関するモジュール。
+use cargo_snippet::snippet;
 
+#[snippet("math/factor")]
 use std::collections::HashMap;
 
 /// 因数分解
 ///
 /// 与えられた数を因数分解し、キーを素数、値を指数とする`HashMap`として返す。
+#[snippet("math/factor")]
 pub fn factorization(n: usize) -> HashMap<usize, usize> {
     let mut factors = HashMap::new();
     let mut i = 1;

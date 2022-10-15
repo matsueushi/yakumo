@@ -1,11 +1,14 @@
 //! 最小公倍数に関するモジュール。
+use cargo_snippet::snippet;
 
 /// 最小公倍数
+#[snippet("math/gcd")]
 pub trait Gcd {
     // 最小公倍数を計算する。
     fn gcd(self, rhs: Self) -> Self;
 }
 
+#[snippet("math/gcd")]
 macro_rules! ugcd_impl {
     ($($t:ty)*) => ($(
         impl Gcd for $t {
@@ -20,6 +23,7 @@ macro_rules! ugcd_impl {
     )*)
 }
 
+#[snippet("math/gcd")]
 macro_rules! igcd_impl {
     ($($t:ty)*) => ($(
         impl Gcd for $t {
@@ -35,7 +39,9 @@ macro_rules! igcd_impl {
     )*)
 }
 
+#[snippet("math/gcd")]
 ugcd_impl! { usize u8 u16 u32 u64 u128 }
+#[snippet("math/gcd")]
 igcd_impl! { isize i8 i16 i32 i64 i128 }
 
 /// 拡張ユークリッドの互除法

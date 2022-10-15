@@ -1,5 +1,7 @@
 //! ユーティリティ。
+use cargo_snippet::snippet;
 
+#[snippet("utils/ceil_pow2")]
 pub fn ceil_pow2(n: usize) -> usize {
     let mut x: usize = 0;
     while (1 << x) < n {

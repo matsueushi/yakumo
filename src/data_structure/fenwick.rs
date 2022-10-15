@@ -1,18 +1,24 @@
 //! フェニック木。
+use cargo_snippet::snippet;
+
+#[snippet("data_structure/fenwick")]
 use super::fold::Fold;
 
+#[snippet("data_structure/fenwick")]
 use std::ops::{AddAssign, Range, Sub};
 
 /// フェニック木。
 /// * 一点加算
 /// * 区間取得
 /// の二つのクエリを `O(log N)` で処理できるデータ構造
+#[snippet("data_structure/fenwick")]
 pub struct FenwickTree<T> {
     len: usize,
     data: Vec<T>,
     e: T,
 }
 
+#[snippet("data_structure/fenwick")]
 impl<T> FenwickTree<T>
 where
     T: Copy + Clone + AddAssign<T> + Sub<Output = T>,
@@ -46,6 +52,7 @@ where
     }
 }
 
+#[snippet("data_structure/fenwick")]
 impl<T> Fold<T> for FenwickTree<T>
 where
     T: Copy + Clone + AddAssign<T> + Sub<Output = T>,

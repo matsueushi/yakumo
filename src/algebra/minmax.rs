@@ -1,11 +1,17 @@
+//! 最小値、最大値
+use cargo_snippet::snippet;
+
+#[snippet("algebra/minmax")]
 pub trait Min {
     fn min() -> Self;
 }
 
+#[snippet("algebra/minmax")]
 pub trait Max {
     fn max() -> Self;
 }
 
+#[snippet("algebra/minmax")]
 macro_rules! min_max_int_impl {
     ($($t:ident)*) => ($(
 
@@ -24,4 +30,5 @@ macro_rules! min_max_int_impl {
     )*)
 }
 
+#[snippet("algebra/minmax")]
 min_max_int_impl! { usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 }

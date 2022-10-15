@@ -1,13 +1,17 @@
 //! 二分探索に関するモジュール。
+use cargo_snippet::snippet;
 
+#[snippet("binary_search")]
 use std::cmp::Ordering::{Greater, Less};
 
 /// AtCoderで使える Rust のバージョンが上がったら必要なくなるかも
+#[snippet("binary_search")]
 pub trait BinarySearch<T> {
     fn search_sorted_first(&self, x: &T) -> usize;
     fn search_sorted_last(&self, x: &T) -> usize;
 }
 
+#[snippet("binary_search")]
 impl<T> BinarySearch<T> for [T]
 where
     T: PartialOrd<T>,

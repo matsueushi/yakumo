@@ -1,9 +1,14 @@
+//! 素数 p を法とする二項係数を計算する
+use cargo_snippet::snippet;
+
+#[snippet("math/combination")]
 pub struct CombinationModPrime<T> {
     p: T,
     fact: Vec<T>,
     fact_inv: Vec<T>,
 }
 
+#[snippet("math/combination")]
 impl CombinationModPrime<usize> {
     pub fn new(n: usize, p: usize) -> Self {
         // i! mod p
