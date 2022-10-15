@@ -2,7 +2,7 @@
 use cargo_snippet::snippet;
 
 #[snippet("algebra/op_mul")]
-use super::multiplicative::{ClosedMul, MulAssoc, MulComm, MulRecip, One, PartialMulRecip};
+use super::multiplicative::{ClosedMul, MulRecip, PartialMulRecip};
 #[snippet("algebra/op_mul")]
 use super::structure::{Associative, Commutative, Identity, Magma, PartialRecip, Recip};
 
@@ -48,17 +48,22 @@ impl<T: Eq + ClosedMul + PartialMulRecip> PartialRecip for OpMul<T> {
 }
 
 #[snippet("algebra/op_mul")]
-impl<T: Eq + ClosedMul + MulAssoc> Associative for OpMul<T> {}
+macro_rules! op_mul_int_impl {
+    ($($t:ty)*) => ($(
+        impl Associative for OpMul<$t> {}
 
-#[snippet("algebra/op_mul")]
-impl<T: Eq + ClosedMul + MulComm> Commutative for OpMul<T> {}
+        impl Commutative for OpMul<$t> {}
 
-#[snippet("algebra/op_mul")]
-impl<T: Eq + ClosedMul + One> Identity for OpMul<T> {
-    fn id(&self) -> Self::Set {
-        T::one()
-    }
+        impl Identity for OpMul<$t> {
+            fn id(&self) -> Self::Set {
+                1
+            }
+        }
+    )*)
 }
+
+#[snippet("algebra/additive")]
+op_mul_int_impl! { usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 }
 
 #[cfg(test)]
 mod tests {

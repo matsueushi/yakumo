@@ -9,15 +9,19 @@ use std::marker::PhantomData;
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 #[snippet("math/mod_int")]
-use super::super::algebra::additive::{AddAssoc, AddComm};
+use super::super::algebra::multiplicative::PartialMulRecip;
 #[snippet("math/mod_int")]
-use super::super::algebra::multiplicative::{MulAssoc, MulComm, PartialMulRecip};
+use super::super::algebra::op_add::OpAdd;
+#[snippet("math/mod_int")]
+use super::super::algebra::op_mul::OpMul;
+#[snippet("math/mod_int")]
+use super::super::algebra::structure::{Associative, Commutative};
 
 #[snippet("math/mod_int")]
 use super::gcd::ext_gcd;
 
 #[snippet("math/mod_int")]
-pub trait Modulo {
+pub trait Modulo: Eq {
     /// 法。
     fn modulo() -> i64;
 }
@@ -159,13 +163,13 @@ impl<M: Modulo> PartialMulRecip for FiniteField<M> {
 }
 
 #[snippet("math/mod_int")]
-impl<M: Modulo> AddAssoc for FiniteField<M> {}
+impl<M: Modulo> Associative for OpAdd<FiniteField<M>> {}
 #[snippet("math/mod_int")]
-impl<M: Modulo> AddComm for FiniteField<M> {}
+impl<M: Modulo> Commutative for OpAdd<FiniteField<M>> {}
 #[snippet("math/mod_int")]
-impl<M: Modulo> MulAssoc for FiniteField<M> {}
+impl<M: Modulo> Associative for OpMul<FiniteField<M>> {}
 #[snippet("math/mod_int")]
-impl<M: Modulo> MulComm for FiniteField<M> {}
+impl<M: Modulo> Commutative for OpMul<FiniteField<M>> {}
 
 /// mod を定義するためのマクロ。
 #[snippet("math/mod_int")]

@@ -2,7 +2,7 @@
 use cargo_snippet::snippet;
 
 #[snippet("algebra/op_add")]
-use super::additive::{AddAssoc, AddComm, ClosedAdd, ClosedNeg, Zero};
+use super::additive::{ClosedAdd, ClosedNeg};
 #[snippet("algebra/op_add")]
 use super::structure::{Associative, Commutative, Identity, Magma, Recip};
 
@@ -41,17 +41,22 @@ impl<T: Eq + ClosedAdd + ClosedNeg> Recip for OpAdd<T> {
 }
 
 #[snippet("algebra/op_add")]
-impl<T: Eq + ClosedAdd + AddAssoc> Associative for OpAdd<T> {}
+macro_rules! op_add_int_impl {
+    ($($t:ty)*) => ($(
+        impl Associative for OpAdd<$t> {}
 
-#[snippet("algebra/op_add")]
-impl<T: Eq + ClosedAdd + AddComm> Commutative for OpAdd<T> {}
+        impl Commutative for OpAdd<$t> {}
 
-#[snippet("algebra/op_add")]
-impl<T: Eq + ClosedAdd + Zero> Identity for OpAdd<T> {
-    fn id(&self) -> Self::Set {
-        T::zero()
-    }
+        impl Identity for OpAdd<$t> {
+            fn id(&self) -> Self::Set {
+                0
+            }
+        }
+    )*)
 }
+
+#[snippet("algebra/op_add")]
+op_add_int_impl! { usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 }
 
 #[cfg(test)]
 mod tests {
