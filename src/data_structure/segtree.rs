@@ -9,6 +9,7 @@ use std::ops::{Index, Range};
 struct SegTree<M: Monoid> {
     len: usize,
     log_size: usize,
+    size: usize,
     data: Vec<M::Set>,
     monoid: M,
 }
@@ -22,10 +23,12 @@ where
     pub fn new(n: usize) -> Self {
         let m = M::default();
         let log_size = ceil_pow2(n);
-        let data = vec![m.id(); 2 * (1 << log_size)];
+        let size = 1 << log_size;
+        let data = vec![m.id(); 2 * size];
         Self {
             len: n,
             log_size,
+            size,
             data,
             monoid: m,
         }
@@ -41,8 +44,66 @@ where
     M: Monoid,
     M::Set: Clone + Copy,
 {
-    fn from(_v: Vec<M::Set>) -> Self {
-        todo!()
+    fn from(v: Vec<M::Set>) -> Self {
+        let mut seg = Self::new(v.len());
+        for (i, val) in v.into_iter().enumerate() {
+            seg.data[seg.size + i] = val.clone();
+        }
+        for i in (1..seg.size).rev() {
+            seg.update(i);
+        }
+        seg
+    }
+}
+
+impl<M> SetValue<M::Set> for SegTree<M>
+where
+    M: Monoid,
+    M::Set: Clone + Copy,
+{
+    fn set(&mut self, i: usize, val: M::Set) {
+        let i = self.size + i;
+        self.data[i] = val;
+        for j in 1..=self.log_size {
+            self.update(i >> j);
+        }
+    }
+}
+
+impl<M> Index<usize> for SegTree<M>
+where
+    M: Monoid,
+{
+    type Output = M::Set;
+
+    fn index(&self, i: usize) -> &Self::Output {
+        &self.data[self.size + i]
+    }
+}
+
+impl<M> Fold for SegTree<M>
+where
+    M: Monoid,
+    M::Set: Copy,
+{
+    type Output = M::Set;
+
+    fn fold(&self, r: Range<usize>) -> Self::Output {
+        let mut lpos = self.size + r.start;
+        let mut rpos = self.size + r.end;
+        let mut lv = self.monoid.id();
+        let mut rv = self.monoid.id();
+        while lpos < rpos {
+            if lpos & 1 == 1 {
+                lv = self.monoid.op(lv, self.data[lpos]);
+                lpos += 1;
+            }
+            if rpos & 1 == 1 {
+                rpos -= 1;
+                rv = self.monoid.op(self.data[rpos], rv);
+            }
+        }
+        self.monoid.op(lv, rv)
     }
 }
 
