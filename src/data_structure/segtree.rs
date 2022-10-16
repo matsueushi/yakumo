@@ -1,20 +1,49 @@
 //! セグメント木
 
 use super::super::algebra::structure::Monoid;
+use super::super::utils::ceil_pow2;
 use super::traits::{Fold, SetValue};
 use std::ops::{Index, Range};
 
 #[allow(dead_code)]
 struct SegTree<M: Monoid> {
+    len: usize,
+    log_size: usize,
     data: Vec<M::Set>,
     monoid: M,
 }
 
+#[allow(dead_code)]
 impl<M> SegTree<M>
 where
     M: Monoid,
-    M::Set: Clone,
+    M::Set: Clone + Copy,
 {
+    pub fn new(n: usize) -> Self {
+        let m = M::default();
+        let log_size = ceil_pow2(n);
+        let data = vec![m.id(); 2 * (1 << log_size)];
+        Self {
+            len: n,
+            log_size,
+            data,
+            monoid: m,
+        }
+    }
+
+    fn update(&mut self, i: usize) {
+        self.data[i] = self.monoid.op(self.data[i << 1], self.data[(i << 1) + 1]);
+    }
+}
+
+impl<M> From<Vec<M::Set>> for SegTree<M>
+where
+    M: Monoid,
+    M::Set: Clone + Copy,
+{
+    fn from(_v: Vec<M::Set>) -> Self {
+        todo!()
+    }
 }
 
 /// デバッグやテスト用の素朴な実装。
