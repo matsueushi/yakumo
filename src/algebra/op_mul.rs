@@ -2,12 +2,10 @@
 use cargo_snippet::snippet;
 
 #[snippet("algebra/op_mul")]
-use super::multiplicative::{ClosedMul, MulRecip, PartialMulRecip};
-#[snippet("algebra/op_mul")]
-use super::structure::{Associative, Commutative, Identity, Magma, PartialRecip, Recip};
-
-#[snippet("algebra/op_mul")]
 use std::marker::PhantomData;
+
+use super::multiplicative::{ClosedMul, MulRecip, PartialMulRecip};
+use super::structure::{Associative, Commutative, Identity, Magma, PartialRecip, Recip};
 
 /// 乗算を表すための構造体
 #[snippet("algebra/op_mul")]

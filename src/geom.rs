@@ -1,7 +1,6 @@
 //! 幾何関連。
 use cargo_snippet::snippet;
 
-#[snippet("geom")]
 use super::math::gcd::Gcd;
 
 #[snippet("geom")]

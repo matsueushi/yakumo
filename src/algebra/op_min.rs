@@ -2,8 +2,6 @@
 use cargo_snippet::snippet;
 
 use super::minmax::Max;
-#[snippet("algebra/op_min")]
-#[snippet("algebra/op_min")]
 use super::structure::{Associative, Commutative, Identity, Magma};
 
 #[snippet("algebra/op_min")]

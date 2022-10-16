@@ -2,10 +2,11 @@
 use cargo_snippet::snippet;
 
 #[snippet("data_structure/fenwick")]
-use super::fold::Fold;
-
+use std::fmt::Debug;
 #[snippet("data_structure/fenwick")]
 use std::ops::{AddAssign, Range, Sub};
+
+use super::fold::Fold;
 
 /// フェニック木。
 /// * 一点加算
@@ -63,6 +64,16 @@ where
     }
 }
 
+#[snippet("data_structure/fenwick")]
+impl<T> Debug for FenwickTree<T>
+where
+    T: std::fmt::Debug + Copy + Clone + AddAssign<T> + Sub<Output = T>,
+{
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_list().entries(self.data.iter()).finish()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -73,6 +84,7 @@ mod tests {
         for i in 0..5 {
             fenwick.add(i, i);
         }
+        assert_eq!(format!("{:?}", fenwick), "[0, 1, 2, 6, 4]");
         assert_eq!(fenwick.fold(0..0), 0);
         assert_eq!(fenwick.fold(1..3), 3);
         assert_eq!(fenwick.fold(0..5), 10);

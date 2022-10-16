@@ -8,16 +8,11 @@ use std::marker::PhantomData;
 #[snippet("math/mod_int")]
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
-#[snippet("math/mod_int")]
 use super::super::algebra::multiplicative::PartialMulRecip;
-#[snippet("math/mod_int")]
 use super::super::algebra::op_add::OpAdd;
-#[snippet("math/mod_int")]
 use super::super::algebra::op_mul::OpMul;
-#[snippet("math/mod_int")]
 use super::super::algebra::structure::{Associative, Commutative};
 
-#[snippet("math/mod_int")]
 use super::gcd::ext_gcd;
 
 #[snippet("math/mod_int")]

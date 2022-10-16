@@ -1,13 +1,11 @@
 //! 最大値取得を型として表現するためのモジュール。
 use cargo_snippet::snippet;
 
-use super::minmax::Min;
-#[snippet("algebra/op_max")]
-#[snippet("algebra/op_max")]
-use super::structure::{Associative, Commutative, Identity, Magma};
-
 #[snippet("algebra/op_max")]
 use std::marker::PhantomData;
+
+use super::minmax::Min;
+use super::structure::{Associative, Commutative, Identity, Magma};
 
 /// 最大値取得を表すための構造体
 #[snippet("algebra/op_max")]

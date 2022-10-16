@@ -2,12 +2,10 @@
 use cargo_snippet::snippet;
 
 #[snippet("algebra/op_add")]
-use super::additive::{ClosedAdd, ClosedNeg};
-#[snippet("algebra/op_add")]
-use super::structure::{Associative, Commutative, Identity, Magma, Recip};
-
-#[snippet("algebra/op_add")]
 use std::marker::PhantomData;
+
+use super::additive::{ClosedAdd, ClosedNeg};
+use super::structure::{Associative, Commutative, Identity, Magma, Recip};
 
 /// 加算を表すための構造体
 #[snippet("algebra/op_add")]
