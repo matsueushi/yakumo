@@ -6,7 +6,7 @@ use std::fmt::Debug;
 #[snippet("data_structure/fenwick")]
 use std::ops::{AddAssign, Range, Sub};
 
-use super::fold::Fold;
+use super::traits::Fold;
 
 /// フェニック木。
 /// * 一点加算
@@ -54,10 +54,12 @@ where
 }
 
 #[snippet("data_structure/fenwick")]
-impl<T> Fold<T> for FenwickTree<T>
+impl<T> Fold for FenwickTree<T>
 where
     T: Copy + Clone + AddAssign<T> + Sub<Output = T>,
 {
+    type Output = T;
+
     /// 半開区間上の和を計算する。
     fn fold(&self, r: Range<usize>) -> T {
         self.prefix_sum(r.end) - self.prefix_sum(r.start)

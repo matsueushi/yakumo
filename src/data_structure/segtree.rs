@@ -1,8 +1,21 @@
 //! セグメント木
 
 use super::super::algebra::structure::Monoid;
-use super::fold::Fold;
+use super::traits::{Fold, SetValue};
 use std::ops::{Index, Range};
+
+#[allow(dead_code)]
+struct SegTree<M: Monoid> {
+    data: Vec<M::Set>,
+    monoid: M,
+}
+
+impl<M> SegTree<M>
+where
+    M: Monoid,
+    M::Set: Clone,
+{
+}
 
 /// デバッグやテスト用の素朴な実装。
 struct NaiveSegTree<M: Monoid> {
@@ -23,11 +36,6 @@ where
             monoid,
         }
     }
-
-    #[allow(dead_code)]
-    pub fn set(&mut self, i: usize, val: M::Set) {
-        self.data[i] = val;
-    }
 }
 
 impl<M: Monoid> From<Vec<M::Set>> for NaiveSegTree<M> {
@@ -39,6 +47,12 @@ impl<M: Monoid> From<Vec<M::Set>> for NaiveSegTree<M> {
     }
 }
 
+impl<M: Monoid> SetValue<M::Set> for NaiveSegTree<M> {
+    fn set(&mut self, i: usize, val: M::Set) {
+        self.data[i] = val;
+    }
+}
+
 impl<M: Monoid> Index<usize> for NaiveSegTree<M> {
     type Output = M::Set;
     fn index(&self, i: usize) -> &Self::Output {
@@ -46,11 +60,13 @@ impl<M: Monoid> Index<usize> for NaiveSegTree<M> {
     }
 }
 
-impl<M> Fold<M::Set> for NaiveSegTree<M>
+impl<M> Fold for NaiveSegTree<M>
 where
     M: Monoid,
     M::Set: Clone,
 {
+    type Output = M::Set;
+
     fn fold(&self, r: Range<usize>) -> M::Set {
         let mut x = self.monoid.id();
         for i in r {
