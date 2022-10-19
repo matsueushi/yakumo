@@ -4,6 +4,8 @@ use cargo_snippet::snippet;
 #[snippet("binary_search")]
 use std::cmp::Ordering::{Greater, Less};
 
+/// 二分探索
+///
 /// AtCoderで使える Rust のバージョンが上がったら必要なくなるかも
 #[snippet("binary_search")]
 pub trait BinarySearch<T> {

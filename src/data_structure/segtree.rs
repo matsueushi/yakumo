@@ -2,7 +2,7 @@
 
 use super::super::algebra::structure::Monoid;
 use super::super::utils::ceil_pow2;
-use super::traits::{Fold, SetValue};
+use super::traits::{Fold, MaxRight, MinLeft, SetValue};
 use std::ops::{Index, Range};
 
 #[allow(dead_code)]
@@ -104,6 +104,32 @@ where
             }
         }
         self.monoid.op(lv, rv)
+    }
+}
+
+impl<M> MaxRight<M> for SegTree<M>
+where
+    M: Monoid,
+{
+    #[allow(dead_code)]
+    fn max_right<F>(&self, _l: usize, _f: F) -> usize
+    where
+        F: Fn(&M) -> bool,
+    {
+        todo!()
+    }
+}
+
+impl<M> MinLeft<M> for SegTree<M>
+where
+    M: Monoid,
+{
+    #[allow(dead_code)]
+    fn min_left<F>(&self, _r: usize, _f: F) -> usize
+    where
+        F: Fn(&M) -> bool,
+    {
+        todo!()
     }
 }
 

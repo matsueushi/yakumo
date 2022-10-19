@@ -20,3 +20,17 @@ pub trait Fold {
     /// fold 演算を行う。
     fn fold(&self, r: Range<usize>) -> Self::Output;
 }
+
+#[snippet("data_structure/traits")]
+pub trait MaxRight<S> {
+    fn max_right<F>(&self, l: usize, pred: F) -> usize
+    where
+        F: Fn(&S) -> bool;
+}
+
+#[snippet("data_structure/traits")]
+pub trait MinLeft<S> {
+    fn min_left<F>(&self, r: usize, pred: F) -> usize
+    where
+        F: Fn(&S) -> bool;
+}
