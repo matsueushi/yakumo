@@ -2,7 +2,7 @@
 
 use super::super::algebra::structure::Monoid;
 use super::super::utils::ceil_pow2;
-use super::traits::{Fold, MaxRight, MinLeft, SetValue};
+use super::traits::{BisectLeft, BisectRight, Fold, SetValue};
 use std::ops::{Index, Range};
 
 #[allow(dead_code)]
@@ -89,6 +89,9 @@ where
     type Output = M::Set;
 
     fn fold(&self, r: Range<usize>) -> Self::Output {
+        if r.is_empty() {
+            return self.monoid.id();
+        }
         let mut lpos = self.size + r.start;
         let mut rpos = self.size + r.end;
         let mut lv = self.monoid.id();
@@ -102,17 +105,19 @@ where
                 rpos -= 1;
                 rv = self.monoid.op(self.data[rpos], rv);
             }
+            lpos >>= 1;
+            rpos >>= 1;
         }
         self.monoid.op(lv, rv)
     }
 }
 
-impl<M> MaxRight<M> for SegTree<M>
+impl<M> BisectRight<M> for SegTree<M>
 where
     M: Monoid,
 {
     #[allow(dead_code)]
-    fn max_right<F>(&self, _l: usize, _f: F) -> usize
+    fn bisect_right<F>(&self, _l: usize, _f: F) -> usize
     where
         F: Fn(&M) -> bool,
     {
@@ -120,12 +125,12 @@ where
     }
 }
 
-impl<M> MinLeft<M> for SegTree<M>
+impl<M> BisectLeft<M> for SegTree<M>
 where
     M: Monoid,
 {
     #[allow(dead_code)]
-    fn min_left<F>(&self, _r: usize, _f: F) -> usize
+    fn bisect_left<F>(&self, _r: usize, _f: F) -> usize
     where
         F: Fn(&M) -> bool,
     {
@@ -195,39 +200,102 @@ where
 #[cfg(test)]
 mod tests {
     use crate::algebra::op_add::OpAdd;
+    use crate::algebra::op_max::OpMax;
     use crate::algebra::op_min::OpMin;
+    use crate::algebra::op_mul::OpMul;
 
     use super::*;
 
     #[test]
-    fn test_naive_segtree_op_add() {
-        let mut naive_seg = NaiveSegTree::<OpAdd<usize>>::new(5);
+    fn test_segtree_op_add() {
+        let len = 5;
 
-        for i in 0..5 {
-            naive_seg.set(i, i * i);
+        macro_rules! test_impl {
+            ($($t:ident)*) => ($(
+                let mut seg = $t::<OpAdd<usize>>::new(len);
+
+                for i in 0..5 {
+                    seg.set(i, i * i);
+                }
+
+                assert_eq!(seg[0], 0);
+                assert_eq!(seg[2], 4);
+
+                assert_eq!(seg.fold(0..0), 0);
+                assert_eq!(seg.fold(0..3), 5);
+                assert_eq!(seg.fold(1..3), 5);
+            )*)
         }
 
-        assert_eq!(naive_seg[0], 0);
-        assert_eq!(naive_seg[2], 4);
-
-        assert_eq!(naive_seg.fold(0..0), 0);
-        assert_eq!(naive_seg.fold(0..3), 5);
-        assert_eq!(naive_seg.fold(1..3), 5);
+        test_impl! { NaiveSegTree SegTree }
     }
 
     #[test]
-    fn test_naive_segtree_op_min() {
-        let mut naive_seg = NaiveSegTree::<OpMin<usize>>::new(5);
+    fn test_segtree_op_mul() {
+        let len = 5;
 
-        for i in 0..5 {
-            naive_seg.set(i, i * i);
+        macro_rules! test_impl {
+            ($($t:ident)*) => ($(
+                let mut seg = $t::<OpMul<usize>>::new(len);
+
+                for i in 0..5 {
+                    seg.set(i, i * i);
+                }
+
+                assert_eq!(seg[0], 0);
+                assert_eq!(seg[2], 4);
+
+                assert_eq!(seg.fold(0..0), 1);
+                assert_eq!(seg.fold(0..3), 0);
+                assert_eq!(seg.fold(1..3), 4);
+            )*)
         }
+        test_impl! { NaiveSegTree SegTree }
+    }
 
-        assert_eq!(naive_seg[0], 0);
-        assert_eq!(naive_seg[2], 4);
+    #[test]
+    fn test_segtree_op_min() {
+        let len = 5;
 
-        assert_eq!(naive_seg.fold(0..0), std::usize::MAX);
-        assert_eq!(naive_seg.fold(0..3), 0);
-        assert_eq!(naive_seg.fold(1..3), 1);
+        macro_rules! test_impl {
+            ($($t:ident)*) => ($(
+                let mut seg = $t::<OpMin<usize>>::new(len);
+
+                for i in 0..5 {
+                    seg.set(i, i * i);
+                }
+
+                assert_eq!(seg[0], 0);
+                assert_eq!(seg[2], 4);
+
+                assert_eq!(seg.fold(0..0), std::usize::MAX);
+                assert_eq!(seg.fold(0..3), 0);
+                assert_eq!(seg.fold(1..3), 1);
+            )*)
+        }
+        test_impl! { NaiveSegTree SegTree }
+    }
+
+    #[test]
+    fn test_segtree_op_max() {
+        let len = 5;
+
+        macro_rules! test_impl {
+            ($($t:ident)*) => ($(
+                let mut seg = $t::<OpMax<usize>>::new(len);
+
+                for i in 0..5 {
+                    seg.set(i, i * i);
+                }
+
+                assert_eq!(seg[0], 0);
+                assert_eq!(seg[2], 4);
+
+                assert_eq!(seg.fold(0..0), 0);
+                assert_eq!(seg.fold(0..3), 4);
+                assert_eq!(seg.fold(1..3), 4);
+            )*)
+        }
+        test_impl! { NaiveSegTree SegTree }
     }
 }

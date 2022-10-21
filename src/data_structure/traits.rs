@@ -22,15 +22,15 @@ pub trait Fold {
 }
 
 #[snippet("data_structure/traits")]
-pub trait MaxRight<S> {
-    fn max_right<F>(&self, l: usize, pred: F) -> usize
+pub trait BisectRight<S> {
+    fn bisect_right<F>(&self, l: usize, pred: F) -> usize
     where
         F: Fn(&S) -> bool;
 }
 
 #[snippet("data_structure/traits")]
-pub trait MinLeft<S> {
-    fn min_left<F>(&self, r: usize, pred: F) -> usize
+pub trait BisectLeft<S> {
+    fn bisect_left<F>(&self, r: usize, pred: F) -> usize
     where
         F: Fn(&S) -> bool;
 }
