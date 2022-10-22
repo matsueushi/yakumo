@@ -1,8 +1,10 @@
 //! セグメント木。
 use cargo_snippet::snippet;
 
+use crate::utils::integer::ceil_pow2;
+
 use super::super::algebra::structure::Monoid;
-use super::super::utils::ceil_pow2;
+use super::super::utils::integer;
 use super::traits::{BisectLeft, BisectRight, Fold, SetValue};
 use std::ops::{Index, Range};
 
