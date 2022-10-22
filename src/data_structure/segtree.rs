@@ -101,7 +101,8 @@ where
     type Output = M::Set;
 
     fn fold(&self, r: Range<usize>) -> Self::Output {
-        if r.is_empty() {
+        // r.is_empty() にしたい
+        if r.start == r.end {
             return self.monoid.id();
         }
         let mut lpos = self.size + r.start;
