@@ -4,7 +4,6 @@ use cargo_snippet::snippet;
 use crate::utils::integer::ceil_pow2;
 
 use super::super::algebra::structure::Monoid;
-use super::super::utils::integer;
 use super::traits::{BisectLeft, BisectRight, Fold, SetValue};
 use std::ops::{Index, Range};
 
@@ -128,35 +127,39 @@ where
 }
 
 #[snippet("data_structure/segtree")]
-impl<M> BisectLeft<M> for SegTree<M>
+impl<M> BisectLeft<M::Set> for SegTree<M>
 where
     M: Monoid,
+    M::Set: Clone + Copy,
 {
     #[allow(dead_code)]
     fn bisect_left<F>(&self, _r: usize, _f: F) -> usize
     where
-        F: Fn(&M) -> bool,
+        F: Fn(&M::Set) -> bool,
     {
         todo!()
     }
 }
 
 #[snippet("data_structure/segtree")]
-impl<M> BisectRight<M> for SegTree<M>
+impl<M> BisectRight<M::Set> for SegTree<M>
 where
     M: Monoid,
+    M::Set: Clone + Copy,
 {
     #[allow(dead_code)]
     fn bisect_right<F>(&self, _l: usize, _f: F) -> usize
     where
-        F: Fn(&M) -> bool,
+        F: Fn(&M::Set) -> bool,
     {
         todo!()
     }
 }
 
 /// デバッグやテスト用の素朴な実装。
+#[derive(Debug, Clone)]
 struct NaiveSegTree<M: Monoid> {
+    len: usize,
     data: Vec<M::Set>,
     monoid: M,
 }
@@ -170,6 +173,7 @@ where
     pub fn new(n: usize) -> Self {
         let monoid = M::default();
         Self {
+            len: n,
             data: vec![monoid.id(); n],
             monoid,
         }
@@ -179,6 +183,7 @@ where
 impl<M: Monoid> From<Vec<M::Set>> for NaiveSegTree<M> {
     fn from(v: Vec<M::Set>) -> Self {
         Self {
+            len: v.len(),
             data: v,
             monoid: M::default(),
         }
@@ -214,27 +219,27 @@ where
     }
 }
 
-impl<M> BisectLeft<M> for NaiveSegTree<M>
+impl<M> BisectLeft<M::Set> for NaiveSegTree<M>
 where
     M: Monoid,
 {
     #[allow(dead_code)]
-    fn bisect_left<F>(&self, _r: usize, _f: F) -> usize
+    fn bisect_left<F>(&self, r: usize, f: F) -> usize
     where
-        F: Fn(&M) -> bool,
+        F: Fn(&M::Set) -> bool,
     {
         todo!()
     }
 }
 
-impl<M> BisectRight<M> for NaiveSegTree<M>
+impl<M> BisectRight<M::Set> for NaiveSegTree<M>
 where
     M: Monoid,
 {
     #[allow(dead_code)]
     fn bisect_right<F>(&self, _l: usize, _f: F) -> usize
     where
-        F: Fn(&M) -> bool,
+        F: Fn(&M::Set) -> bool,
     {
         todo!()
     }

@@ -31,5 +31,5 @@ macro_rules! line_impl {
     )*)
 }
 
-#[snippet("geom")]
+#[snippet("geom/line")]
 line_impl! { isize i8 i16 i32 i64 i128 }
