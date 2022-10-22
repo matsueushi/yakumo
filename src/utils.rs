@@ -1,4 +1,4 @@
-//! ユーティリティ。
+//! ユーティリティ用のモジュール。
 use cargo_snippet::snippet;
 
 #[snippet("utils/ceil_pow2")]

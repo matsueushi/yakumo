@@ -1,6 +1,7 @@
 //! Union-Find木。
 use cargo_snippet::snippet;
 
+/// Union-Find木。
 #[snippet("data_structure/union_find")]
 #[derive(Debug, Clone)]
 pub struct UnionFind {
@@ -10,6 +11,7 @@ pub struct UnionFind {
 
 #[snippet("data_structure/union_find")]
 impl UnionFind {
+    /// 大きさ `n` の Union-Find 木を初期化する。
     pub fn new(n: usize) -> Self {
         Self {
             par: vec![0; n],
@@ -17,6 +19,7 @@ impl UnionFind {
         }
     }
 
+    /// 頂点 `a` の属する連結成分の代表元を返す。
     pub fn find_root(&mut self, a: usize) -> usize {
         if self.size[a] > 0 {
             return a;
@@ -25,6 +28,7 @@ impl UnionFind {
         self.par[a]
     }
 
+    /// 辺 `(a, b)` を追加し、追加後の連結成分の代表元を返す。
     pub fn union(&mut self, a: usize, b: usize) -> usize {
         let mut x = self.find_root(a);
         let mut y = self.find_root(b);
@@ -40,10 +44,12 @@ impl UnionFind {
         x
     }
 
+    /// 頂点 `a` と 頂点 `b` が同じ連結成分に属しているかを返す。
     pub fn in_same_set(&mut self, a: usize, b: usize) -> bool {
         self.find_root(a) == self.find_root(b)
     }
 
+    /// 頂点 `a` の属する連結成分のサイズを返す。
     pub fn group_size(&mut self, a: usize) -> usize {
         let x = self.find_root(a);
         self.size[x]

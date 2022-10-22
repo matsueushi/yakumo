@@ -1,12 +1,20 @@
-//! セグメント木
+//! セグメント木。
+use cargo_snippet::snippet;
 
 use super::super::algebra::structure::Monoid;
 use super::super::utils::ceil_pow2;
 use super::traits::{BisectLeft, BisectRight, Fold, SetValue};
 use std::ops::{Index, Range};
 
-#[allow(dead_code)]
-struct SegTree<M: Monoid> {
+/// セグメント木。
+///
+/// モノイドに対して、
+/// - 要素の一点更新
+/// - 区間の要素の積の取得
+///
+/// を `O(log N)` で行うことができる。
+#[snippet("data_structure/segtree")]
+pub struct SegTree<M: Monoid> {
     len: usize,
     log_size: usize,
     size: usize,
@@ -14,7 +22,7 @@ struct SegTree<M: Monoid> {
     monoid: M,
 }
 
-#[allow(dead_code)]
+#[snippet("data_structure/segtree")]
 impl<M> SegTree<M>
 where
     M: Monoid,
@@ -39,6 +47,7 @@ where
     }
 }
 
+#[snippet("data_structure/segtree")]
 impl<M> From<Vec<M::Set>> for SegTree<M>
 where
     M: Monoid,
@@ -56,6 +65,7 @@ where
     }
 }
 
+#[snippet("data_structure/segtree")]
 impl<M> SetValue<M::Set> for SegTree<M>
 where
     M: Monoid,
@@ -70,6 +80,7 @@ where
     }
 }
 
+#[snippet("data_structure/segtree")]
 impl<M> Index<usize> for SegTree<M>
 where
     M: Monoid,
@@ -81,6 +92,7 @@ where
     }
 }
 
+#[snippet("data_structure/segtree")]
 impl<M> Fold for SegTree<M>
 where
     M: Monoid,
@@ -112,12 +124,13 @@ where
     }
 }
 
-impl<M> BisectRight<M> for SegTree<M>
+#[snippet("data_structure/segtree")]
+impl<M> BisectLeft<M> for SegTree<M>
 where
     M: Monoid,
 {
     #[allow(dead_code)]
-    fn bisect_right<F>(&self, _l: usize, _f: F) -> usize
+    fn bisect_left<F>(&self, _r: usize, _f: F) -> usize
     where
         F: Fn(&M) -> bool,
     {
@@ -125,12 +138,13 @@ where
     }
 }
 
-impl<M> BisectLeft<M> for SegTree<M>
+#[snippet("data_structure/segtree")]
+impl<M> BisectRight<M> for SegTree<M>
 where
     M: Monoid,
 {
     #[allow(dead_code)]
-    fn bisect_left<F>(&self, _r: usize, _f: F) -> usize
+    fn bisect_right<F>(&self, _l: usize, _f: F) -> usize
     where
         F: Fn(&M) -> bool,
     {
@@ -194,6 +208,32 @@ where
             x = self.monoid.op(x, self.data[i].clone());
         }
         x
+    }
+}
+
+impl<M> BisectLeft<M> for NaiveSegTree<M>
+where
+    M: Monoid,
+{
+    #[allow(dead_code)]
+    fn bisect_left<F>(&self, _r: usize, _f: F) -> usize
+    where
+        F: Fn(&M) -> bool,
+    {
+        todo!()
+    }
+}
+
+impl<M> BisectRight<M> for NaiveSegTree<M>
+where
+    M: Monoid,
+{
+    #[allow(dead_code)]
+    fn bisect_right<F>(&self, _l: usize, _f: F) -> usize
+    where
+        F: Fn(&M) -> bool,
+    {
+        todo!()
     }
 }
 

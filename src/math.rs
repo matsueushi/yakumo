@@ -1,4 +1,4 @@
-//! 数学に関するモジュール。
+//! 数学に関連するモジュール。
 pub mod combination;
 pub mod factor;
 pub mod floor_sum;

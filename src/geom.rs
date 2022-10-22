@@ -1,4 +1,4 @@
-//! 幾何関連。
+//! 幾何に関連するモジュール。
 use cargo_snippet::snippet;
 
 use super::math::gcd::Gcd;

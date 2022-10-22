@@ -1,4 +1,4 @@
-//! データ構造。
+//! データ構造に関連するモジュール。
 pub mod fenwick;
 pub mod segtree;
 pub mod traits;

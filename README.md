@@ -12,5 +12,5 @@ $ cargo snippet -t vscode > snippet.json
 ```
 
 ## 参考
-[ nekolib ](https://rsk0315.github.io/library-rs/nekolib/)
-[ hatoo / cargo-snippet ](https://github.com/hatoo/cargo-snippet)
+ - [ rsk0315 / nekolib ](https://rsk0315.github.io/library-rs/nekolib/)
+ - [ hatoo / cargo-snippet ](https://github.com/hatoo/cargo-snippet)

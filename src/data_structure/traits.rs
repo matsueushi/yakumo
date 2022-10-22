@@ -1,4 +1,4 @@
-//! Fold 演算。
+//! データ構造が利用するトレイト。
 use cargo_snippet::snippet;
 
 #[snippet("data_structure/traits")]
@@ -12,6 +12,7 @@ pub trait SetValue<T> {
 }
 
 /// Fold 演算
+///
 /// <https://en.wikipedia.org/wiki/Fold_%28higher-order_function%29>
 #[snippet("data_structure/traits")]
 pub trait Fold {
@@ -22,15 +23,15 @@ pub trait Fold {
 }
 
 #[snippet("data_structure/traits")]
-pub trait BisectRight<S> {
-    fn bisect_right<F>(&self, l: usize, pred: F) -> usize
+pub trait BisectLeft<S> {
+    fn bisect_left<F>(&self, r: usize, pred: F) -> usize
     where
         F: Fn(&S) -> bool;
 }
 
 #[snippet("data_structure/traits")]
-pub trait BisectLeft<S> {
-    fn bisect_left<F>(&self, r: usize, pred: F) -> usize
+pub trait BisectRight<S> {
+    fn bisect_right<F>(&self, l: usize, pred: F) -> usize
     where
         F: Fn(&S) -> bool;
 }
