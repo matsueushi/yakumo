@@ -188,15 +188,13 @@ where
         let mut v = self.monoid.id();
 
         loop {
-            println!("{}", r);
             r -= 1;
-            while r > 1 && r & 1 == 0 {
+            while r > 1 && r & 1 == 1 {
                 r >>= 1;
             }
             if !(f(&self.monoid.op(self.data[r], v))) {
                 while r < self.size {
-                    println!("{}", r);
-                    r = (r << 1) + 1;
+                    r = 2 * r + 1;
                     let val = self.monoid.op(self.data[r], v);
                     if f(&val) {
                         v = val;
@@ -359,8 +357,8 @@ mod tests {
                 assert_eq!(seg.bisect_fold(0, |&x| x <= 5), 3);
                 assert_eq!(seg.bisect_fold(0, |&x| x < 5), 2);
 
-                // assert_eq!(seg.bisect_fold_rev(5, |&x| x <= 25), 3);
-                // assert_eq!(seg.bisect_fold_rev(5, |&x| x < 25), 4);
+                assert_eq!(seg.bisect_fold_rev(5, |&x| x <= 25), 3);
+                assert_eq!(seg.bisect_fold_rev(5, |&x| x < 25), 4);
             )*)
         }
 
@@ -385,6 +383,7 @@ mod tests {
                 assert_eq!(seg.fold(0..0), 1);
                 assert_eq!(seg.fold(0..3), 0);
                 assert_eq!(seg.fold(1..3), 4);
+
             )*)
         }
         test_impl! { NaiveSegTree SegTree }
@@ -408,6 +407,7 @@ mod tests {
                 assert_eq!(seg.fold(0..0), std::usize::MAX);
                 assert_eq!(seg.fold(0..3), 0);
                 assert_eq!(seg.fold(1..3), 1);
+
             )*)
         }
         test_impl! { NaiveSegTree SegTree }
@@ -431,6 +431,7 @@ mod tests {
                 assert_eq!(seg.fold(0..0), 0);
                 assert_eq!(seg.fold(0..3), 4);
                 assert_eq!(seg.fold(1..3), 4);
+
             )*)
         }
         test_impl! { NaiveSegTree SegTree }
