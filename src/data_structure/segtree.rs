@@ -1,10 +1,13 @@
 //! セグメント木。
 use cargo_snippet::snippet;
 
+use super::super::algebra::structure::Monoid;
+use super::traits::{BisectFold, BisectFoldRev, Fold, SetValue};
 use crate::utils::integer::ceil_pow2;
 
-use super::super::algebra::structure::Monoid;
-use super::traits::{BisectLeft, BisectRight, Fold, SetValue};
+// #[snippet("data_structure/segtree")]
+// use std::fmt::Debug;
+#[snippet("data_structure/segtree")]
 use std::ops::{Index, Range};
 
 /// セグメント木。
@@ -127,32 +130,87 @@ where
 }
 
 #[snippet("data_structure/segtree")]
-impl<M> BisectLeft<M::Set> for SegTree<M>
+impl<M> BisectFold<M::Set> for SegTree<M>
 where
     M: Monoid,
     M::Set: Clone + Copy,
 {
-    #[allow(dead_code)]
-    fn bisect_left<F>(&self, _r: usize, _f: F) -> usize
+    fn bisect_fold<F>(&self, l: usize, f: F) -> usize
     where
         F: Fn(&M::Set) -> bool,
     {
-        todo!()
+        if l == self.len {
+            return self.len;
+        }
+
+        let mut l = self.size + l;
+        let mut v = self.monoid.id();
+        loop {
+            while l & 1 == 0 {
+                l >>= 1;
+            }
+            if !(f(&self.monoid.op(v, self.data[l]))) {
+                while l < self.size {
+                    l <<= 1;
+                    let val = self.monoid.op(v, self.data[l]);
+                    if f(&val) {
+                        v = val;
+                        l += 1;
+                    }
+                }
+                return l - self.size;
+            }
+            v = self.monoid.op(v, self.data[l]);
+            l += 1;
+            if l & ((!l) + 1) == l {
+                break;
+            }
+        }
+        self.len
     }
 }
 
 #[snippet("data_structure/segtree")]
-impl<M> BisectRight<M::Set> for SegTree<M>
+impl<M> BisectFoldRev<M::Set> for SegTree<M>
 where
     M: Monoid,
     M::Set: Clone + Copy,
 {
-    #[allow(dead_code)]
-    fn bisect_right<F>(&self, _l: usize, _f: F) -> usize
+    fn bisect_fold_rev<F>(&self, r: usize, f: F) -> usize
     where
         F: Fn(&M::Set) -> bool,
     {
-        todo!()
+        if r == 0 {
+            return 0;
+        }
+
+        let mut r = self.size + r;
+        let mut v = self.monoid.id();
+
+        loop {
+            println!("{}", r);
+            r -= 1;
+            while r > 1 && r & 1 == 0 {
+                r >>= 1;
+            }
+            if !(f(&self.monoid.op(self.data[r], v))) {
+                while r < self.size {
+                    println!("{}", r);
+                    r = (r << 1) + 1;
+                    let val = self.monoid.op(self.data[r], v);
+                    if f(&val) {
+                        v = val;
+                        r -= 1;
+                    }
+                }
+                return r + 1 - self.size;
+            }
+            v = self.monoid.op(self.data[r], v);
+            if r & ((!r) + 1) == r {
+                break;
+            }
+        }
+        0
     }
 }
 
@@ -219,29 +277,52 @@ where
     }
 }
 
-impl<M> BisectLeft<M::Set> for NaiveSegTree<M>
+impl<M> BisectFold<M::Set> for NaiveSegTree<M>
 where
     M: Monoid,
+    M::Set: Clone + Copy,
 {
-    #[allow(dead_code)]
-    fn bisect_left<F>(&self, r: usize, f: F) -> usize
+    fn bisect_fold<F>(&self, l: usize, f: F) -> usize
     where
         F: Fn(&M::Set) -> bool,
     {
-        todo!()
+        let mut v = self.monoid.id();
+        assert!(f(&v));
+
+        let mut l = l;
+        while l < self.len {
+            v = self.monoid.op(v, self.data[l]);
+            if !f(&v) {
+                break;
+            }
+            l += 1;
+        }
+        l
     }
 }
 
-impl<M> BisectRight<M::Set> for NaiveSegTree<M>
+impl<M> BisectFoldRev<M::Set> for NaiveSegTree<M>
 where
     M: Monoid,
+    M::Set: Clone + Copy,
 {
-    #[allow(dead_code)]
-    fn bisect_right<F>(&self, _l: usize, _f: F) -> usize
+    fn bisect_fold_rev<F>(&self, r: usize, f: F) -> usize
     where
         F: Fn(&M::Set) -> bool,
     {
-        todo!()
+        let mut v = self.monoid.id();
+        assert!(f(&v));
+
+        let mut r = r;
+        while r > 0 {
+            r -= 1;
+            v = self.monoid.op(self.data[r], v);
+            if !f(&v) {
+                r += 1;
+                break;
+            }
+        }
+        r
     }
 }
 
@@ -253,6 +334,8 @@ mod tests {
     use crate::algebra::op_mul::OpMul;
 
     use super::*;
+
+    // [0, 1, 4, 9, 16]
 
     #[test]
     fn test_segtree_op_add() {
@@ -272,6 +355,12 @@ mod tests {
                 assert_eq!(seg.fold(0..0), 0);
                 assert_eq!(seg.fold(0..3), 5);
                 assert_eq!(seg.fold(1..3), 5);
+
+                assert_eq!(seg.bisect_fold(0, |&x| x <= 5), 3);
+                assert_eq!(seg.bisect_fold(0, |&x| x < 5), 2);
+
+                // assert_eq!(seg.bisect_fold_rev(5, |&x| x <= 25), 3);
+                // assert_eq!(seg.bisect_fold_rev(5, |&x| x < 25), 4);
             )*)
         }
 

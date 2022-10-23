@@ -23,15 +23,15 @@ pub trait Fold {
 }
 
 #[snippet("data_structure/traits")]
-pub trait BisectLeft<S> {
-    fn bisect_left<F>(&self, r: usize, pred: F) -> usize
+pub trait BisectFold<S> {
+    fn bisect_fold<F>(&self, l: usize, pred: F) -> usize
     where
         F: Fn(&S) -> bool;
 }
 
 #[snippet("data_structure/traits")]
-pub trait BisectRight<S> {
-    fn bisect_right<F>(&self, l: usize, pred: F) -> usize
+pub trait BisectFoldRev<S> {
+    fn bisect_fold_rev<F>(&self, r: usize, pred: F) -> usize
     where
         F: Fn(&S) -> bool;
 }
