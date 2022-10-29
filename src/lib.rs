@@ -1,3 +1,4 @@
+//! 競技プログラミングのためのスニペット集（予定）
 pub mod algebra;
 pub mod data_structure;
 pub mod geom;

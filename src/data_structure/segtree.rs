@@ -5,8 +5,6 @@ use super::super::algebra::structure::Monoid;
 use super::traits::{BisectFold, BisectFoldRev, Fold, SetValue};
 use crate::utils::integer::ceil_pow2;
 
-// #[snippet("data_structure/segtree")]
-// use std::fmt::Debug;
 #[snippet("data_structure/segtree")]
 use std::ops::{Index, Range};
 
